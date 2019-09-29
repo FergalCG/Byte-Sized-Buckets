@@ -20,14 +20,12 @@ class User extends React.Component {
 
     addUser = e => {
         e.preventDefault()
-        const db = firebase.firestore();
-        db.settings({
-            timestampsInSnapshots: true
-        })
+        const db = firebase.firestore()
         const userRef = db.collection('users').add({
             fullname: this.state.fullname,
             email: this.state.email
-        })  
+        })
+        console.log(userRef)  
         this.setState({
           fullname: '',
           email: ''
