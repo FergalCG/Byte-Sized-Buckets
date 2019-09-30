@@ -1,8 +1,10 @@
-import React from 'react'
-import firebase from "../firestore"
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import db from "../firestore"
+import { getUser } from '../store/user'
 
 
-class User extends React.Component {
+class DisconnectedUser extends Component {
 
     constructor() {
         super()
@@ -20,12 +22,14 @@ class User extends React.Component {
 
     addUser = e => {
         e.preventDefault()
-        const db = firebase.firestore()
-        const userRef = db.collection('users').add({
+        db.collection('users').doc(this.state.email).set({
             fullname: this.state.fullname,
             email: this.state.email
         })
-        console.log(userRef)  
+        .then( () => {
+            console.log('user has been set')
+        })
+        this.props.getUser(this.state.email)
         this.setState({
           fullname: '',
           email: ''
@@ -35,26 +39,36 @@ class User extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.addUser}>
-            <input
-                type="text"
-                name="fullname"
-                placeholder="Full name"
-                onChange={this.updateInput}
-                value={this.state.fullname}
-            />
-            <input
-                type="email"
-                name="email"
-                placeholder="Full name"
-                onChange={this.updateInput}
-                value={this.state.email}
-            />
-            <button type="submit">Submit</button>
+            <form onSubmit={this.addUser} id="user-form">
+                <p>Login or Signup!</p>
+                <input
+                    type="text"
+                    name="fullname"
+                    placeholder="                Full name"
+                    className="make-skinny"
+                    onChange={this.updateInput}
+                    value={this.state.fullname}
+                />
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="                   Email"
+                    className="make-skinny"
+                    onChange={this.updateInput}
+                    value={this.state.email}
+                />
+                <button type="submit" className="make-skinny">Submit</button>
             </form>
         )
     }
 }
 
+const mapDispatchToProps = dispatch => ({
+    getUser: (email) => {
+        dispatch(getUser(email))
+    }
+})
+
+const User = connect(null, mapDispatchToProps)(DisconnectedUser)
 
 export default User

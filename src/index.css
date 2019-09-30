@@ -5,9 +5,180 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-color: #C3C3E6;
+  overflow: scroll;
+}
+
+html, body, #root, #main, #next {
+  height: 100%;
+  width: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+#main {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+#user {
+  margin: auto;
+  height: 60%;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  text-align: center
+}
+
+#user form{
+  margin: auto;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#next {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#todos, #bucket {
+  margin: auto;
+  height: 78%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+#todo-form {
+  margin: auto;
+  height: 20%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+#all-todos {
+  margin: auto;
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+#form-input1, #form-input2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+#form-button {
+  position: absolute;
+}
+
+#preset-todos {
+  margin: auto;
+  height: 13%;
+  width: 20%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+#todos-list {
+  margin: auto;
+  height: 90%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+#bucket-list {
+  margin: auto;
+  height: 80%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.contents {
+  margin: auto;
+  width: 50%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+#bucket-form {
+  margin: auto;
+  height: 20%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#single-todo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+.make-skinny {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.make-skinnier {
+  margin: auto;
+  width: 9%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.bucketForm-time {
+  text-align: center;
+}
+
+#header {
+  margin: auto;
+  height: 10%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#user-form {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center
 }

@@ -1,13 +1,11 @@
 import React from 'react'
 
 const Todo = props => {
-    const {content} = this.props
+    const {content} = props.todo
     return (
-        <li>
-            <p>
+            <div>
                 {content}
-            </p>
-        </li>
+            </div>
     )
 }
 

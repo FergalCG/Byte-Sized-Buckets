@@ -1,99 +1,139 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import firebase from "../firestore"
+import { setBucket, dispatchRemoveBucketTodo } from '../store/bucket'
+import { allTodosStateChange } from './AllTodos'
+import { dispatchRemoveTodo } from '../store/todos'
 import Todo from './Todo'
+import store from '../store'
 
-const notVery = 4
-const somewhat = 8
-const Very = 16
 
-const dummyData = [
-    {priority: 10, difficulty: 450, content: 'Finish Stackathon'},
-    {priority: 8, difficulty: 210, content: 'Study Algorithm Problems'},
-    {priority: 7, dificulty: 120, content: 'Update my Resume'},
-    {priority: 5, difficulty: 90, content: 'Get Interview Attire'},
-    {priority: 3, difficulty: 60, content: 'Learn to Code'},
-    {priority: 3, difficulty: 180, content: 'Clean The House'},
-    {priority: 1, difficulty: 30, content: 'Get A Haircut'}
-]
+export let bucketListStateChange = function() {
+    this.setState(store.getState().bucket)
+}
+
 
 class DisconnectedBucketList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            list: [],
-            dedication: 0,
+            bucket: [],
+            hours: 0,
+            minutes: 0,
             date: null
         }
+        this.time = this.state.hours*60 + this.state.minutes
         this.generateBucket = this.generateBucket.bind(this)
         this.handleChange = this.handleChange.bind(this)
+        this.completeTodo = this.completeTodo.bind(this)
+        this.removeTodo = this.removeTodo.bind(this)
+        bucketListStateChange = bucketListStateChange.bind(this)
     }
 
-    generateBucket(e, todos = dummyData, dedication = 240) {
-        e.preventDefault()
+    generateBucket(event, todos = this.props.todos, time = 0) {
+        time += Number(this.state.hours*60) + Number(this.state.minutes)
+        event.preventDefault()
+        console.log(time)
         let list = []
-        let curDedication = 0
+        let curTime = 0
         let count = 0
         if(todos.length) {
-            while(curDedication <= dedication+30 && count < todos.length && curDedication !== dedication) {
+            while(curTime <= time+15 && count < todos.length && curTime !== time) {
                 const todoCopy = todos[count]
-                if(curDedication + todoCopy.difficulty <= dedication+1) {
+                if(curTime + todoCopy.time <= time+15) {
+                    curTime += todoCopy.time
+                    console.log(todoCopy.time)
                     list.push(todoCopy)
-                    curDedication += todoCopy.difficulty
                 }
                 count++
             }
             if(!list.length) {
-                list = this.generateBucket(todos, dedication+30)
-                if(todos[0].priority - list[0].priority >= 5) {
-                    list[0] = todos[0]
-                }
+                list = this.generateBucket(event, todos, time+15)
             }
         }
         if(list.length) {
+            if(todos[0].priority - list[0].priority >= 5) {
+                list[0] = todos[0]
+            }
             console.log(list)
-            this.setState({list, date: new Date()})
-            return
+            this.setState({bucket: list, hours: 0, minutes: 0, date: new Date()})
+            this.props.setBucket(this.props.user.email, list)
+            return []
         }
-        return list
+        return
     }
 
     handleChange(e) {
         e.preventDefault()
-        let mins = 0
-        if(e.target.name === 'hours') {
-            mins = e.target.value * 60
-        }else {
-            mins = e.target.value
-        }
-        this.setState({...this.state, dedication: this.state.dedication + mins})
+        this.setState({
+            [e.target.name]: e.target.value
+          })
     }
 
     completeTodo(e) {
         e.preventDefault()
+        let removedTodo = e.target.value
+        let newTodos = this.props.todos.filter( todo => {
+
+            return JSON.stringify(todo) !== removedTodo
+        })
+        let newBucket = this.state.bucket.filter( todo => {
+
+            return JSON.stringify(todo) !== removedTodo
+        })
+        console.log('dispatch next line')
+        this.props.dispatchRemoveBucketTodo(this.props.user.email, newBucket)
+        this.props.dispatchRemoveTodo(this.props.user.email, newTodos)
+        allTodosStateChange()
+        this.setState({
+            ...this.state,
+            bucket: newBucket
+        })
     }
 
     removeTodo(e) {
         e.preventDefault()
+        let removedTodo = e.target.value
+        let newBucket = this.state.bucket.filter( todo => {
+
+            return JSON.stringify(todo) !== removedTodo
+        })
+        console.log('dispatch next line')
+        this.props.dispatchRemoveBucketTodo(this.props.user.email, newBucket)
+        this.setState({
+            ...this.state,
+            bucket: newBucket
+        })
     }
 
 
     render() {
-        const allTodos = this.props.todos
+        const bucket = this.state.bucket
         let count = -1
         return (
             <div>
-                {allTodos.length ? (
-                    <div>
-                        {allTodos.map(todo => {
+                {bucket.length ? (
+                    <div key={count} id="bucket-list">
+                        {bucket.map(todo => {
                             count++
                             return (
-                                <div>
+                                <div key={count} className="contents">
                                     <Todo todo={todo} key={count} />
-                                    <button className="bucket-complete-todo" type="button" onClick={this.completeTodo} key={count}>
+                                    <button
+                                    type="button"
+                                    className="make-skinnier"
+                                    value={JSON.stringify(todo)}
+                                    onClick={this.completeTodo}
+                                    key={count-2}
+                                    >
                                         <span/>&#9989;
                                     </button>
-                                    <button className="bucket-remove-todo" type="button" onClick={this.removeTodo} key={count}>
+                                    <button
+                                    className="make-skinnier"
+                                    type="button"
+                                    value={JSON.stringify(todo)}
+                                    onClick={this.removeTodo}
+                                    key={count+50}
+                                    >
                                         <span/>&#10060;
                                     </button> 
                                 </div>
@@ -104,24 +144,30 @@ class DisconnectedBucketList extends Component {
                     <div />
                 }
                 <div>
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.generateBucket} id="bucket-form">
+                        <p className="bucketForm-time">Hours</p>
                         <input
                             type="number"
                             placeholder="0"
                             name="hours"
+                            className="make-skinny"
                             id="hours"
                             onChange={this.handleChange}
                         />
-                        <p>Hours</p>
+                        <p className="bucketForm-time">Minutes</p>
                         <input
                             type="number"
                             placeholder="0"
                             name="minutes"
+                            className="make-skinny"
                             id="minutes"
                             onChange={this.handleChange}
                         />
-                        <p>Minutes</p>
-                        <button className="bucket-remove-todo" type="submit" onClick={this.generateBucket} key={count}>
+                        <button
+                        className="make-skinny"
+                        type="submit"
+                        key={count}
+                        >
                             Generate BucketList
                         </button>
                     </form>
@@ -131,10 +177,24 @@ class DisconnectedBucketList extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    todos: state.todos
+const mapDispatchToProps = dispatch => ({
+    setBucket: (email, bucket) => {
+        dispatch(setBucket(email, bucket))
+    },
+    dispatchRemoveBucketTodo: (email, newBucket) => {
+        dispatch(dispatchRemoveBucketTodo(email, newBucket))
+    },
+    dispatchRemoveTodo: (email, newTodos) => {
+        dispatch(dispatchRemoveTodo(email, newTodos))
+    }
 })
 
-const BucketList = connect(mapStateToProps)(DisconnectedBucketList)
+const mapStateToProps = state => ({
+    todos: state.todos.todos,
+    user: state.user.user,
+    bucket: state.bucket.bucket
+})
+
+const BucketList = connect(mapStateToProps, mapDispatchToProps)(DisconnectedBucketList)
 
 export default BucketList
