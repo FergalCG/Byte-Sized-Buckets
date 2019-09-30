@@ -26,7 +26,7 @@ class DisconnectedApp extends Component {
       <div id='main'>
           <div id="header">
             <h1>Byte Sized Buckets</h1>
-            <p>Breaking down your growing to-do list into digestable daily buckets!</p>
+            <p><strong>Breaking down your growing to-do list into digestable daily buckets!</strong></p>
           </div>
           {
           !this.state.isLoggedIn ?
