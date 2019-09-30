@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Buckets",
+  "name": "Byte Sized Buckets",
+  "description": "Taking your growing to-do list and breaking it up into an easily digestible daily bucket-list. Your daily list takes into account pre-defined priorities and deadlines to keep your task completion optimized!",
   "icons": [
     {
       "src": "favicon.ico",

@@ -13,4 +13,15 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig)
 
-export default firebase
+const db = firebase.firestore()
+
+db.enablePersistence()
+.catch( err => {
+    if (err.code === 'failed-precondition') {
+        console.log('ERROR WITH FIRESTORE PERSISTENCE - CODE:01' + err)
+    } else if (err.code === 'unimplemented') {
+        console.log('ERROR WITH FIRESTORE PERSISTENCE - CODE:02' + err)
+    }
+})
+
+export default db
