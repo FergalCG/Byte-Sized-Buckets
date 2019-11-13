@@ -39,7 +39,7 @@ class DisconnectedTodoForm extends Component {
         })
         allTodosStateChange()
     }
-
+    
 
     render() {
         return (
@@ -59,7 +59,7 @@ class DisconnectedTodoForm extends Component {
                         onChange={this.updateInput}
                         value={this.state.priority}
                     />
-                    <p>&#60;&#8722;&#8722;Priority</p>
+                    <p>&#60;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;Priority</p>
                 </div>
                 <div id="form-input2">
                     <input

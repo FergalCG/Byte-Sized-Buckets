@@ -17,7 +17,7 @@ export const getBucket = email => dispatch => {
 
 export const dispatchRemoveBucketTodo = (email, newBucket) => dispatch => {
     console.log('attempting to remove from bucket' + newBucket)
-    db.collection('users').doc(email).collection('bucket').doc('bucket').update({
+    db.collection('users').doc(email).update({
         bucket: newBucket
     })
     .then( () => {
@@ -31,7 +31,7 @@ export const dispatchRemoveBucketTodo = (email, newBucket) => dispatch => {
 
 export const setBucket = (email, bucket) => dispatch => {
     console.log('attempting to set')
-    db.collection('users').doc(email).collection('bucket').doc('bucket').set({bucket: bucket})
+    db.collection('users').doc(email).set({bucket: bucket})
     .then( () => {
         console.log('success setting todos')
     })

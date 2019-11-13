@@ -163,12 +163,13 @@ class DisconnectedBucketList extends Component {
                             id="minutes"
                             onChange={this.handleChange}
                         />
+                        <br/>
                         <button
                         className="make-skinny"
                         type="submit"
                         key={count}
                         >
-                            Generate BucketList
+                            <h3>Generate BucketList</h3>
                         </button>
                     </form>
                 </div>
