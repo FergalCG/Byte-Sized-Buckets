@@ -18,7 +18,7 @@ export const removeTodo = newTodos => ({ type: REMOVE_TODO, newTodos})
 
 export const dispatchRemoveTodo = (email, newTodos) => dispatch => {
     console.log('attempting to remove' + newTodos)
-    db.collection('users').doc(email).collection('allTodos').doc('allTodos').update({
+    db.collection('users').doc(email).update({
         allTodos: newTodos
     })
     .then( () => {
@@ -32,7 +32,7 @@ export const dispatchRemoveTodo = (email, newTodos) => dispatch => {
 
 export const dispatchAddTodo = (email, todo) => dispatch => {
     console.log('attempting to add' + todo)
-    db.collection('users').doc(email).collection('allTodos').doc('allTodos').update({
+    db.collection('users').doc(email).update({
         allTodos: firebase.firestore.FieldValue.arrayUnion(todo)
     })
     .then( () => {
@@ -46,7 +46,7 @@ export const dispatchAddTodo = (email, todo) => dispatch => {
 
 export const dispatchSetTodos = (email, todos) => dispatch => {
     console.log('attempting to set')
-    db.collection('users').doc(email).collection('allTodos').doc('allTodos').set({allTodos: todos})
+    db.collection('users').doc(email).set({allTodos: todos})
     .then( () => {
         console.log('success setting todos')
     })
@@ -58,11 +58,11 @@ export const dispatchSetTodos = (email, todos) => dispatch => {
 
 export const getTodos = email => dispatch => {
     console.log('attempting to get')
-    db.collection('users').doc(email).collection('allTodos').get()
+    db.collection('users').doc(email).get()
     .then( doc => {
         if(doc) {
             console.log(doc.data())
-            dispatch(gotTodos(doc.data()))
+            dispatch(gotTodos(doc.data().allTodos))
         }else {
             console.log('Couldnt fetch todos!')
         }
