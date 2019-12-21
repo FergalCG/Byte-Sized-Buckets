@@ -24,4 +24,4 @@ db.enablePersistence()
     }
 })
 
-export default db
+export { db, firebase }

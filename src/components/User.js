@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import db from "../firestore"
+import { db } from "../firestore"
 import { getUser } from '../store/user'
 
 

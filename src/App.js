@@ -6,6 +6,7 @@ import AllTodos from './components/AllTodos'
 import BucketList from './components/BucketList'
 import TodoForm from './components/TodoForm'
 import store from './store'
+import { firebase } from './firestore'
 
 export let appStateChange = function() {
   console.log(store.getState().user.user)
@@ -19,6 +20,16 @@ class DisconnectedApp extends Component {
       isLoggedIn: this.props.isLoggedIn
     }
     appStateChange = appStateChange.bind(this)
+  }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+      } else {
+        // No user is signed in.
+      }
+    });
   }
 
   render() {

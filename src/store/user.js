@@ -1,4 +1,4 @@
-import db from '../firestore'
+import {db} from '../firestore'
 import { appStateChange } from '../App.js'
 
 const GOT_USER = 'GOT_USER'
