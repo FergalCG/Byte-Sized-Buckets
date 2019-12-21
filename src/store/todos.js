@@ -1,5 +1,4 @@
-import db from '../firestore'
-import firebase from 'firebase'
+import {db, firebase} from '../firestore'
 
 const REMOVE_TODO = 'REMOVE_TODO'
 const ADD_TODO = 'ADD_TODO'

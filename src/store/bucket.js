@@ -1,4 +1,4 @@
-import db from '../firestore'
+import { db } from '../firestore'
 
 const REMOVE_BUCKET_TODO = 'REMOVE_BUCKET_TODO'
 const GOT_BUCKET = 'GOT_BUCKET'
