@@ -20,6 +20,72 @@ code {
     monospace;
 }
 
+h1 {
+  text-decoration: underline;
+}
+
+.contents {
+  margin: auto;
+  width: 50%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+.make-skinny {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.make-skinnier {
+  margin: auto;
+  width: 9%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.bucketForm-time {
+  text-align: center;
+}
+
+#bucket-form {
+  margin: auto;
+  height: 20%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#single-todo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+#header {
+  margin: auto;
+  height: 10%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  background-color: #8C7AA9;
+}
+
+#user-form {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
 #main {
   display: flex;
   flex-flow: row wrap;
@@ -34,7 +100,7 @@ code {
   text-align: center
 }
 
-#user form{
+#user {
   margin: auto;
   height: 100%;
   width: 100%;
@@ -60,7 +126,7 @@ code {
   background-color: #A88FAC;
 }
 
-#todo-form {
+#login-form, #signup-form {
   margin: auto;
   height: 20%;
   width: 100%;
@@ -68,6 +134,7 @@ code {
   flex-direction: column;
   justify-content: center;
   align-content: center;
+  align-items: center;
 }
 
 #all-todos {
@@ -123,70 +190,4 @@ code {
   flex-direction: column;
   justify-content: center;
   align-content: center;
-}
-
-.contents {
-  margin: auto;
-  width: 50%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
-}
-
-#bucket-form {
-  margin: auto;
-  height: 20%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-#single-todo {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
-}
-
-.make-skinny {
-  width: 25%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.make-skinnier {
-  margin: auto;
-  width: 9%;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-}
-
-.bucketForm-time {
-  text-align: center;
-}
-
-#header {
-  margin: auto;
-  height: 10%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  background-color: #8C7AA9;
-}
-
-#user-form {
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center
-}
-
-h1 {
-  text-decoration: underline;
 }

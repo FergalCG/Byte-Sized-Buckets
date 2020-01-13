@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import { setBucket, dispatchRemoveBucketTodo } from '../store/bucket'
+import { setBucket, dispatchRemoveBucketTodo, getBucket } from '../store/bucket'
 import { allTodosStateChange } from './AllTodos'
 import { dispatchRemoveTodo } from '../store/todos'
 import Todo from './Todo'
 import store from '../store'
+import "../firestore"
+import * as firebase from "firebase"
 
 
 export let bucketListStateChange = function() {
@@ -27,6 +29,10 @@ class DisconnectedBucketList extends Component {
         this.completeTodo = this.completeTodo.bind(this)
         this.removeTodo = this.removeTodo.bind(this)
         bucketListStateChange = bucketListStateChange.bind(this)
+    }
+
+    componentDidMount() {
+
     }
 
     generateBucket(event, todos = this.props.todos, time = 0) {
@@ -56,7 +62,7 @@ class DisconnectedBucketList extends Component {
             }
             console.log(list)
             this.setState({bucket: list, hours: 0, minutes: 0, date: new Date()})
-            this.props.setBucket(this.props.user.email, list)
+            this.props.setBucket(firebase.auth().currentUser.uid, list)
             return []
         }
         return
@@ -66,7 +72,7 @@ class DisconnectedBucketList extends Component {
         e.preventDefault()
         this.setState({
             [e.target.name]: e.target.value
-          })
+        })
     }
 
     completeTodo(e) {
@@ -81,8 +87,8 @@ class DisconnectedBucketList extends Component {
             return JSON.stringify(todo) !== removedTodo
         })
         console.log('dispatch next line')
-        this.props.dispatchRemoveBucketTodo(this.props.user.email, newBucket)
-        this.props.dispatchRemoveTodo(this.props.user.email, newTodos)
+        this.props.dispatchRemoveBucketTodo(firebase.auth().currentUser.uid, newBucket)
+        this.props.dispatchRemoveTodo(firebase.auth().currentUser.uid, newTodos)
         allTodosStateChange()
         this.setState({
             ...this.state,
@@ -98,7 +104,7 @@ class DisconnectedBucketList extends Component {
             return JSON.stringify(todo) !== removedTodo
         })
         console.log('dispatch next line')
-        this.props.dispatchRemoveBucketTodo(this.props.user.email, newBucket)
+        this.props.dispatchRemoveBucketTodo(firebase.auth().currentUser.uid, newBucket)
         this.setState({
             ...this.state,
             bucket: newBucket
@@ -179,20 +185,23 @@ class DisconnectedBucketList extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    setBucket: (email, bucket) => {
-        dispatch(setBucket(email, bucket))
+    getBucket: (uid) => {
+        dispatch(getBucket(uid))
     },
-    dispatchRemoveBucketTodo: (email, newBucket) => {
-        dispatch(dispatchRemoveBucketTodo(email, newBucket))
+    setBucket: (uid, bucket) => {
+        dispatch(setBucket(uid, bucket))
     },
-    dispatchRemoveTodo: (email, newTodos) => {
-        dispatch(dispatchRemoveTodo(email, newTodos))
+    dispatchRemoveBucketTodo: (uid, newBucket) => {
+        dispatch(dispatchRemoveBucketTodo(uid, newBucket))
+    },
+    dispatchRemoveTodo: (uid, newTodos) => {
+        dispatch(dispatchRemoveTodo(uid, newTodos))
     }
 })
 
 const mapStateToProps = state => ({
     todos: state.todos.todos,
-    user: state.user.user,
+    user: state.user,
     bucket: state.bucket.bucket
 })
 

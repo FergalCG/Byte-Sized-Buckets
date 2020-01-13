@@ -5,6 +5,8 @@ import { dispatchRemoveBucketTodo } from '../store/bucket'
 import { bucketListStateChange } from './BucketList'
 import Todo from './Todo'
 import store from '../store'
+import "../firestore"
+import * as firebase from "firebase"
 
 const dummyData = [
     {priority: 10, time: 450, content: 'Finish Stackathon'},
@@ -32,6 +34,10 @@ class DisconnectedAllTodos extends Component {
         this.removeTodo = this.removeTodo.bind(this)
     }
 
+    componentDidMount() {
+        this.props.getTodos(firebase.auth().currentUser.uid)
+        this.setState(store.getState().todos)
+    }
 
     generatePresetTodos(e) {
         e.preventDefault()
@@ -40,7 +46,7 @@ class DisconnectedAllTodos extends Component {
             todos: dummyData
         })
         console.log(this.state.todos)
-        this.props.dispatchSetTodos(this.props.user.email, dummyData)
+        this.props.dispatchSetTodos(firebase.auth().currentUser.uid, dummyData)
     }
 
     removeTodo(e) {
@@ -56,9 +62,9 @@ class DisconnectedAllTodos extends Component {
         })
         console.log(newTodos)
         console.log('dispatch next line')
-        this.props.dispatchRemoveTodo(this.props.user.email, newTodos)
+        this.props.dispatchRemoveTodo(firebase.auth().currentUser.uid, newTodos)
         if( JSON.stringify(newBucket) !== JSON.stringify(this.state.bucket) ) {
-            this.props.dispatchRemoveBucketTodo(this.props.user.email, newBucket)
+            this.props.dispatchRemoveBucketTodo(firebase.auth().currentUser.uid, newBucket)
             bucketListStateChange()
         }
         this.setState({
@@ -109,17 +115,17 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    getTodos: (email) => {
-        dispatch(getTodos(email))
+    getTodos: (uid) => {
+        dispatch(getTodos(uid))
     },
-    dispatchSetTodos: (email, todos) => {
-        dispatch(dispatchSetTodos(email, todos))
+    dispatchSetTodos: (uid, todos) => {
+        dispatch(dispatchSetTodos(uid, todos))
     },
-    dispatchRemoveTodo: (email, newTodos) => {
-        dispatch(dispatchRemoveTodo(email, newTodos))
+    dispatchRemoveTodo: (uid, newTodos) => {
+        dispatch(dispatchRemoveTodo(uid, newTodos))
     },
-    dispatchRemoveBucketTodo: (email, newBucket) => {
-        dispatch(dispatchRemoveBucketTodo(email, newBucket))
+    dispatchRemoveBucketTodo: (uid, newBucket) => {
+        dispatch(dispatchRemoveBucketTodo(uid, newBucket))
     }
 })
 

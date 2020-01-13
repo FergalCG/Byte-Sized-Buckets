@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { dispatchAddTodo } from '../store/todos'
 import { allTodosStateChange } from './AllTodos'
+import "../firestore"
+import * as firebase from "firebase"
 
 
 class DisconnectedTodoForm extends Component {
@@ -26,7 +28,7 @@ class DisconnectedTodoForm extends Component {
 
     addTodo = e => {
         e.preventDefault()
-        this.props.dispatchAddTodo(this.props.user.email, {
+        this.props.dispatchAddTodo(firebase.auth().currentUser.uid, {
             content: this.state.content,
             priority: this.state.priority,
             time: this.state.hours*60 + this.state.minutes

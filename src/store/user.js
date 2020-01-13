@@ -1,35 +1,33 @@
 import {db} from '../firestore'
-import { appStateChange } from '../App.js'
+// import { appStateChange } from '../App.js'
 
 const GOT_USER = 'GOT_USER'
 
 const initialState = {
-    user: {
-        fullname: '',
-        email: '',
-        isLoggedIn: false
-    }
+    fullName: '',
+    email: ''
 }
 
 export const gotUser = user => ({ type: GOT_USER, user})
 
-export const getUser = email => dispatch => {
+export const getUser = uid => dispatch => {
     console.log('attempting to get')
-    db.collection('users').doc(email).get()
+    db.collection('users').doc(uid).get()
     .then( doc => {
-        dispatch(gotUser({...doc.data(), isLoggedIn: true}))
+        console.log(doc.data())
+        dispatch(gotUser({...doc.data()}))
     })
-    .then( () => {
-        console.log('changing app state')
-        appStateChange()
-    })
+    // .then( () => {
+    //     console.log('changing app state')
+    //     appStateChange()
+    // })
 }
 
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
         case GOT_USER:
-            return {...state, user: action.user}
+            return {...state, fullName: action.user.fullName, email: action.user.email}
         default:
             return state
     }

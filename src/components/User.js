@@ -1,74 +1,139 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { db } from "../firestore"
-import { getUser } from '../store/user'
+import "../firestore"
+import * as firebase from "firebase"
+import { db, provider } from "../firestore"
 
 
-class DisconnectedUser extends Component {
+class User extends Component {
 
     constructor() {
         super()
         this.state = {
-         email: '',
-         fullname: ''
+            email: '',
+            password: '',
+            fullName: '',
+            signingUp: false
         }
     }
 
     updateInput = e => {
         this.setState({
-          [e.target.name]: e.target.value
+            [e.target.name]: e.target.value
         })
     }
+    
+    handleLogin = (e) => {
+    e.preventDefault()
+    console.log('about to login')
+    firebase
+        .auth()
+        .signInWithEmailAndPassword(this.state.email, this.state.password)
+        .then( result => console.log(result.user))
+        .catch(error => console.log(error))
+    }
 
-    addUser = e => {
+    handleSignUp = (e) => {
         e.preventDefault()
-        db.collection('users').doc(this.state.email).set({
-            fullname: this.state.fullname,
-            email: this.state.email
-        })
-        .then( () => {
-            console.log('user has been set')
-        })
-        this.props.getUser(this.state.email)
-        this.setState({
-          fullname: '',
-          email: ''
-        })
+        console.log('about to create')
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .then(result => {
+                let user = result.user
+                db.collection("users").doc(user.uid).set(
+                    {
+                        fullName: this.state.fullName,
+                        email: this.state.email
+                    },
+                    { merge: true }
+                )
+            })
+            .catch(error => console.log(error))
+    }
+
+    handleGoogleAuth = () => {
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+        // The signed-in user info.
+        let user = result.user
+        db.collection("users").doc(user.uid).set(
+            {
+                fullName: user.providerData.displayName,
+                email: user.providerData.email
+            },
+            { merge: true }
+        )
+    }).catch(function(error) {
+        console.log(error)
+    })
+    }
+
+    toggleSignUp = () => {
+        this.setState({ signingUp: !this.state.signingUp })
     }
 
 
     render() {
         return (
-            <form onSubmit={this.addUser} id="user-form">
-                <p>Login or Signup!</p>
-                <input
-                    type="text"
-                    name="fullname"
-                    placeholder="                Full name"
-                    className="make-skinny"
-                    onChange={this.updateInput}
-                    value={this.state.fullname}
-                />
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="                   Email"
-                    className="make-skinny"
-                    onChange={this.updateInput}
-                    value={this.state.email}
-                />
-                <button type="submit" className="make-skinny">Submit</button>
-            </form>
+            <div className = 'form-container'>
+                {
+                    this.state.signingUp ? 
+                        <form onSubmit={this.handleSignUp} id="signup-form">
+                            <p>Sign Up!</p>
+                            <input
+                                type="text"
+                                name="fullName"
+                                placeholder="Full name"
+                                className="make-skinny"
+                                onChange={this.updateInput}
+                                value={this.state.fullName}
+                            />
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Email"
+                                className="make-skinny"
+                                onChange={this.updateInput}
+                                value={this.state.email}
+                            />
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                className="make-skinny"
+                                onChange={this.updateInput}
+                                value={this.state.password}
+                            />
+                            <button type="submit" className="make-skinny">Submit</button>
+                            <p>Already have an account? <u onClick={this.toggleSignUp}>Login!</u></p>
+                        </form>
+                        
+                    :
+                    <form onSubmit={this.handleLogin} id="login-form">
+                        <p>Login!</p>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            className="make-skinny"
+                            onChange={this.updateInput}
+                            value={this.state.email}
+                        />
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            className="make-skinny"
+                            onChange={this.updateInput}
+                            value={this.state.password}
+                        />
+                        <button type="submit" className="make-skinny">Submit</button>
+                        <p>Don't have an account? <u onClick={this.toggleSignUp}>Sign Up!</u></p>
+                    </form>
+                }
+                <img src="https://blog.addthiscdn.com/wp-content/uploads/2015/11/Google_logo.png" alt="Google Button" onClick={this.handleGoogleAuth} height="42" width="42"/>
+            </div>
         )
     }
 }
-
-const mapDispatchToProps = dispatch => ({
-    getUser: (email) => {
-        dispatch(getUser(email))
-    }
-})
-
-const User = connect(null, mapDispatchToProps)(DisconnectedUser)
 
 export default User
