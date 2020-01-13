@@ -11,13 +11,21 @@ export const gotBucket = bucket => ({ type: GOT_BUCKET, bucket})
 export const removeBucketTodo = newBucket => ({ type: REMOVE_BUCKET_TODO, newBucket})
 
 
-export const getBucket = email => dispatch => {
-    
+export const getBucket = uid => dispatch => {
+    console.log('attempting to get current bucket...')
+    db.collection('users').doc(uid).get()
+    .then( doc => {
+        if(doc.data().bucket) {
+            dispatch(gotBucket(doc.data()))
+        }else {
+            console.log('Could not find a bucket to fetch!')
+        }
+    })
 }
 
-export const dispatchRemoveBucketTodo = (email, newBucket) => dispatch => {
+export const dispatchRemoveBucketTodo = (uid, newBucket) => dispatch => {
     console.log('attempting to remove from bucket' + newBucket)
-    db.collection('users').doc(email).update({
+    db.collection('users').doc(uid).update({
         bucket: newBucket
     })
     .then( () => {
@@ -29,9 +37,9 @@ export const dispatchRemoveBucketTodo = (email, newBucket) => dispatch => {
     dispatch(removeBucketTodo(newBucket))
 }
 
-export const setBucket = (email, bucket) => dispatch => {
+export const setBucket = (uid, bucket) => dispatch => {
     console.log('attempting to set')
-    db.collection('users').doc(email).set({bucket: bucket})
+    db.collection('users').doc(uid).set({bucket: bucket})
     .then( () => {
         console.log('success setting todos')
     })

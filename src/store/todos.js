@@ -15,9 +15,9 @@ export const addTodo = todo => ({ type: ADD_TODO, todo})
 export const removeTodo = newTodos => ({ type: REMOVE_TODO, newTodos})
 
 
-export const dispatchRemoveTodo = (email, newTodos) => dispatch => {
+export const dispatchRemoveTodo = (uid, newTodos) => dispatch => {
     console.log('attempting to remove' + newTodos)
-    db.collection('users').doc(email).update({
+    db.collection('users').doc(uid).update({
         allTodos: newTodos
     })
     .then( () => {
@@ -29,9 +29,9 @@ export const dispatchRemoveTodo = (email, newTodos) => dispatch => {
     dispatch(removeTodo(newTodos))
 }
 
-export const dispatchAddTodo = (email, todo) => dispatch => {
+export const dispatchAddTodo = (uid, todo) => dispatch => {
     console.log('attempting to add' + todo)
-    db.collection('users').doc(email).update({
+    db.collection('users').doc(uid).update({
         allTodos: firebase.firestore.FieldValue.arrayUnion(todo)
     })
     .then( () => {
@@ -43,9 +43,9 @@ export const dispatchAddTodo = (email, todo) => dispatch => {
     dispatch(addTodo(todo))
 }
 
-export const dispatchSetTodos = (email, todos) => dispatch => {
+export const dispatchSetTodos = (uid, todos) => dispatch => {
     console.log('attempting to set')
-    db.collection('users').doc(email).set({allTodos: todos})
+    db.collection('users').doc(uid).set({allTodos: todos})
     .then( () => {
         console.log('success setting todos')
     })
@@ -55,11 +55,11 @@ export const dispatchSetTodos = (email, todos) => dispatch => {
     dispatch(gotTodos(todos))
 }
 
-export const getTodos = email => dispatch => {
+export const getTodos = uid => dispatch => {
     console.log('attempting to get')
-    db.collection('users').doc(email).get()
+    db.collection('users').doc(uid).get()
     .then( doc => {
-        if(doc) {
+        if(doc.data().allTodos) {
             console.log(doc.data())
             dispatch(gotTodos(doc.data().allTodos))
         }else {

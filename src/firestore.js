@@ -14,6 +14,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 const db = firebase.firestore()
+const provider = new firebase.auth.GoogleAuthProvider();
 
 db.enablePersistence()
 .catch( err => {
@@ -24,4 +25,4 @@ db.enablePersistence()
     }
 })
 
-export { db, firebase }
+export { db, firebase, provider }
