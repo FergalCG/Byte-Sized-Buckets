@@ -10,7 +10,7 @@ body {
   overflow: scroll;
 }
 
-html, body, #root, #main, #next {
+html, body, #root, #main {
   height: 100%;
   width: 100%;
 }
@@ -22,6 +22,10 @@ code {
 
 h1 {
   text-decoration: underline;
+}
+
+h4 {
+  text-align: center;
 }
 
 .contents {
@@ -88,7 +92,11 @@ h1 {
 
 #main {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column;
+}
+
+#nav-main {
+  flex-flow: row
 }
 
 #user {

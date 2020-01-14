@@ -32,7 +32,7 @@ class DisconnectedBucketList extends Component {
     }
 
     componentDidMount() {
-
+        this.setState(store.getState().bucket)
     }
 
     generateBucket(event, todos = this.props.todos, time = 0) {
@@ -89,7 +89,6 @@ class DisconnectedBucketList extends Component {
         console.log('dispatch next line')
         this.props.dispatchRemoveBucketTodo(firebase.auth().currentUser.uid, newBucket)
         this.props.dispatchRemoveTodo(firebase.auth().currentUser.uid, newTodos)
-        allTodosStateChange()
         this.setState({
             ...this.state,
             bucket: newBucket
@@ -124,7 +123,7 @@ class DisconnectedBucketList extends Component {
                             return (
                                 <div key={count} className="contents">
                                     <Todo todo={todo} key={count} />
-                                    <button
+                                    {/* <button
                                     type="button"
                                     className="make-skinnier"
                                     value={JSON.stringify(todo)}
@@ -132,7 +131,17 @@ class DisconnectedBucketList extends Component {
                                     key={count-2}
                                     >
                                         <span/>&#9989;
-                                    </button>
+                                    </button> */}
+                                    <img 
+                                        src='https://library.kissclipart.com/20180910/wuq/kissclipart-green-check-icon-small-clipart-check-mark-computer-210ea7ac0d00affd.jpg' 
+                                        alt='Complete' 
+                                        width='21' 
+                                        height='21'
+                                        className="make-skinnier"
+                                        value={JSON.stringify(todo)}
+                                        onClick={this.completeTodo}
+                                        key={count-2}
+                                    />
                                     <button
                                     className="make-skinnier"
                                     type="button"

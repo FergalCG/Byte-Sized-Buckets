@@ -65,7 +65,6 @@ class DisconnectedAllTodos extends Component {
         this.props.dispatchRemoveTodo(firebase.auth().currentUser.uid, newTodos)
         if( JSON.stringify(newBucket) !== JSON.stringify(this.state.bucket) ) {
             this.props.dispatchRemoveBucketTodo(firebase.auth().currentUser.uid, newBucket)
-            bucketListStateChange()
         }
         this.setState({
             ...this.state,
