@@ -59,7 +59,7 @@ class DisconnectedApp extends Component {
         </div>
         {
           this.state.isLoggedIn ?
-          <div>
+          <div id='nav-main'>
             <Navbar />
             <Main />
           </div>
