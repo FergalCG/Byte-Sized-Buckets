@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getTodos, dispatchSetTodos, dispatchRemoveTodo} from '../store/todos'
 import { dispatchRemoveBucketTodo } from '../store/bucket'
-import { bucketListStateChange } from './BucketList'
 import Todo from './Todo'
 import store from '../store'
 import "../firestore"
