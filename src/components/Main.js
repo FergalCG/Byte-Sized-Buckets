@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import AllTodos from './AllTodos'
 import TodoForm from './TodoForm'
 import BucketList from './BucketList'
+import { getTodos } from '../store/todos'
+import * as firebase from "firebase"
+import "../firestore"
 
 export let chooseView = function(bool) {
     if(this.state.allTodos !== bool) {
@@ -9,7 +13,7 @@ export let chooseView = function(bool) {
     }
 }
 
-export default class Main extends Component {
+class DisconnectedMain extends Component {
     constructor() {
         super()
         this.state = {
@@ -19,7 +23,9 @@ export default class Main extends Component {
         chooseView = chooseView.bind(this)
     }
 
-    
+    componentDidMount() {
+        this.props.getTodos(firebase.auth().currentUser.uid)
+    }
 
     render() {
         return (
@@ -44,3 +50,13 @@ export default class Main extends Component {
         )
     }
 }
+
+const mapDispatchToProps = dispatch => ({
+    getTodos: (uid) => {
+        dispatch(getTodos(uid))
+    }
+})
+
+const Main = connect(null, mapDispatchToProps)(DisconnectedMain)
+
+export default Main

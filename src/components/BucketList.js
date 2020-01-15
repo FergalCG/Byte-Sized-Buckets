@@ -121,7 +121,7 @@ class DisconnectedBucketList extends Component {
                         {bucket.map(todo => {
                             count++
                             return (
-                                <div key={count} className="contents">
+                                <div key={count} className="bucket-contents">
                                     <Todo todo={todo} key={count} />
                                     {/* <button
                                     type="button"
