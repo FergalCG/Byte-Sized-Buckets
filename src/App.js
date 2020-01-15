@@ -5,13 +5,8 @@ import User from './components/User'
 import { getUser } from './store/user'
 import Main from './components/Main'
 import Navbar from './components/Navbar'
-// import store from './store'
 import { firebase } from './firestore'
 
-// export let appStateChange = function() {
-//   console.log(store.getState().user.user)
-//   this.setState({isLoggedIn: store.getState().user.user.isLoggedIn})
-// }
 
 class DisconnectedApp extends Component {
   constructor(props) {
@@ -34,9 +29,6 @@ class DisconnectedApp extends Component {
         console.log('No user is signed in!')
       }
     })
-    // if(firebase.auth().currentUser.uid) {
-    //   this.setState({isLoggedIn: false})
-    // }
   }
 
   handleSignOut = () => {

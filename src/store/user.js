@@ -1,5 +1,4 @@
 import {db} from '../firestore'
-// import { appStateChange } from '../App.js'
 
 const GOT_USER = 'GOT_USER'
 
@@ -17,10 +16,6 @@ export const getUser = uid => dispatch => {
         console.log(doc.data())
         dispatch(gotUser({...doc.data()}))
     })
-    // .then( () => {
-    //     console.log('changing app state')
-    //     appStateChange()
-    // })
 }
 
 
