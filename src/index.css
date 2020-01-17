@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: #C3C3E6;
+  background-image: linear-gradient(rgb(181, 137, 214), rgb(181, 137, 214),rgb(153, 105, 199), rgb(128, 79, 179), rgb(106, 53, 156), rgb(85, 37, 134));
   overflow: scroll;
 }
 
@@ -79,7 +79,7 @@ h4 {
   text-align: center;
   display: flex;
   flex-direction: column;
-  background-color: #8C7AA9;
+  background-color: transparent;
 }
 
 #user-form {
@@ -119,7 +119,7 @@ h4 {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: #8C7AA9;
+  background-color: transparent;
 }
 
 #todos, #bucket {
@@ -130,7 +130,7 @@ h4 {
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  background-color: #A88FAC;
+  background-color: transparent;
 }
 
 #login-form, #signup-form {
