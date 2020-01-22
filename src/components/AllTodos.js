@@ -72,7 +72,7 @@ class DisconnectedAllTodos extends Component {
     }
 
     render() {
-        const allTodos = this.state.todos
+        const allTodos = this.props.todos
         let count = -1
         return (
             <div id="all-todos">
