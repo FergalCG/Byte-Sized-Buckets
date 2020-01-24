@@ -52,19 +52,21 @@ class User extends Component {
     }
 
     handleGoogleAuth = () => {
-        firebase.auth().signInWithPopup(provider).then(function(result) {
-        // The signed-in user info.
-        let user = result.user
-        db.collection("users").doc(user.uid).set(
-            {
-                fullName: user.providerData.displayName,
-                email: user.providerData.email
-            },
-            { merge: true }
-        )
-    }).catch(function(error) {
-        console.log(error)
-    })
+        firebase.auth().signInWithPopup(provider)
+        .then( result => {
+            // The signed-in user info.
+            let user = result.user
+            db.collection("users").doc(user.uid).set(
+                {
+                    fullName: user.providerData.displayName,
+                    email: user.providerData.email
+                },
+                { merge: true }
+            )
+        })
+        .catch( error => {
+            console.log(error)
+        })
     }
 
     toggleSignUp = () => {

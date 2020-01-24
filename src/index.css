@@ -6,13 +6,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-image: linear-gradient(rgb(181, 137, 214), rgb(181, 137, 214),rgb(153, 105, 199), rgb(128, 79, 179), rgb(106, 53, 156), rgb(85, 37, 134));
+  background-image: linear-gradient(rgb(255, 255, 255),rgb(181, 137, 214), rgb(181, 137, 214),rgb(153, 105, 199), rgb(128, 79, 179), rgb(106, 53, 156), rgb(85, 37, 134));
   overflow: scroll;
 }
 
-html, body, #root, #main {
-  height: 100%;
-  width: 100%;
+html, body, #root, #app {
+  height: 100vh;
+  width: 100vw;
 }
 
 code {
@@ -38,7 +38,7 @@ h4 {
 }
 
 .make-skinny {
-  width: 25%;
+  width: 25vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,7 +46,7 @@ h4 {
 
 .make-skinnier {
   margin: auto;
-  width: 9%;
+  width: 9vh;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -58,8 +58,8 @@ h4 {
 
 #bucket-form {
   margin: auto;
-  height: 20%;
-  width: 100%;
+  height: 20vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -75,10 +75,8 @@ h4 {
 
 #header {
   margin: auto;
-  height: 10%;
+  height: 10vh;
   text-align: center;
-  display: flex;
-  flex-direction: column;
   background-color: transparent;
 }
 
@@ -86,31 +84,36 @@ h4 {
   margin: auto;
   display: flex;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
-#main {
+#app {
   display: flex;
   flex-flow: column;
 }
 
 #nav-main {
-  flex-flow: row
+  height: 85vh;
+  flex-flow: row;
+}
+
+#button-signout {
+  height: 5vh;
 }
 
 #user {
   margin: auto;
-  height: 60%;
-  width: 75%;
+  height: 60vh;
+  width: 75vh;
   display: flex;
   flex-direction: column;
-  text-align: center
+  text-align: center;
 }
 
 #user {
   margin: auto;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -124,8 +127,8 @@ h4 {
 
 #todos, #bucket {
   margin: auto;
-  height: 78%;
-  width: 50%;
+  height: 78vh;
+  width: 50vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -135,8 +138,8 @@ h4 {
 
 #login-form, #signup-form {
   margin: auto;
-  height: 20%;
-  width: 100%;
+  height: 20vh;
+  width: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -146,8 +149,8 @@ h4 {
 
 #all-todos {
   margin: auto;
-  height: 80%;
-  width: 100%;
+  height: 80vh;
+  width: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -167,8 +170,8 @@ h4 {
 
 #preset-todos {
   margin: auto;
-  height: 13%;
-  width: 20%;
+  height: 13vh;
+  width: 20vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -179,8 +182,8 @@ h4 {
 
 #todos-list {
   margin: auto;
-  height: 90%;
-  width: 100%;
+  height: 90vh;
+  width: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -190,8 +193,8 @@ h4 {
 
 #bucket-list {
   margin: auto;
-  height: 80%;
-  width: 100%;
+  height: 80vh;
+  width: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
