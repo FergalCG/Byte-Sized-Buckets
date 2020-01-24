@@ -35,12 +35,11 @@ class DisconnectedAllTodos extends Component {
 
     componentDidMount() {
         this.props.getTodos(firebase.auth().currentUser.uid)
-        this.setState(store.getState().todos)
+        this.setState(this.props.todos)
     }
 
     generatePresetTodos(e) {
         e.preventDefault()
-        console.log(store.getState())
         this.setState({
             todos: dummyData
         })
@@ -72,7 +71,7 @@ class DisconnectedAllTodos extends Component {
     }
 
     render() {
-        const allTodos = this.state.todos
+        const allTodos = this.props.todos
         let count = -1
         return (
             <div id="all-todos">

@@ -17,11 +17,9 @@ class DisconnectedApp extends Component {
   }
 
   componentDidMount() {
-    console.log(firebase.auth().currentUser)
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         // User is signed in.
-        console.log(user.uid)
         this.props.getUser(user.uid)
         this.setState({isLoggedIn: true})
       } else {
@@ -32,9 +30,11 @@ class DisconnectedApp extends Component {
   }
 
   handleSignOut = () => {
-    firebase.auth().signOut().then(function() {
+    firebase.auth().signOut()
+    .then( () => {
       console.log('Sign out successful!')
-    }).catch(function(error) {
+    })
+    .catch( error => {
       console.log('An error occurred while signing out!' + error)
     })
     this.setState({isLoggedIn: false})
@@ -42,7 +42,7 @@ class DisconnectedApp extends Component {
 
   render() {
     return (
-      <div id='main'>
+      <div id='app'>
         <div id="header">
           <h1>Byte Sized Buckets</h1>
           {
@@ -60,7 +60,7 @@ class DisconnectedApp extends Component {
             <User />
           </div>
         }
-        <button onClick={this.handleSignOut}>Sign Out</button>
+        <button id='button-signout' onClick={this.handleSignOut}>Sign Out</button>
       </div>
     )
   }
