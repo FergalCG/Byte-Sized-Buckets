@@ -76,7 +76,7 @@ class User extends Component {
 
     render() {
         return (
-            <div className = 'form-container'>
+            <div id = 'user-form-container'>
                 {
                     this.state.signingUp ? 
                         <form onSubmit={this.handleSignUp} id="signup-form">
@@ -132,7 +132,7 @@ class User extends Component {
                         <p>Don't have an account? <u onClick={this.toggleSignUp}>Sign Up!</u></p>
                     </form>
                 }
-                <img src="https://blog.addthiscdn.com/wp-content/uploads/2015/11/Google_logo.png" alt="Google Button" onClick={this.handleGoogleAuth} height="42" width="42"/>
+                <img id='google-button' src="https://blog.addthiscdn.com/wp-content/uploads/2015/11/Google_logo.png" alt="Google Button" onClick={this.handleGoogleAuth} height="42" width="42"/>
             </div>
         )
     }

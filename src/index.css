@@ -12,7 +12,6 @@ body {
 
 html, body, #root, #app {
   height: 100vh;
-  width: 100vw;
 }
 
 code {
@@ -56,66 +55,42 @@ h4 {
   text-align: center;
 }
 
-#bucket-form {
-  margin: auto;
-  height: 20vh;
-  width: 100vw;
+#app {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
-#single-todo {
+#header-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  flex-grow: 1;
   justify-content: center;
-  align-content: center;
-}
-
-#header {
-  margin: auto;
-  height: 10vh;
   text-align: center;
   background-color: transparent;
 }
 
-#user-form {
-  margin: auto;
+#button-signout {
+  /* margin: 1vh;
+  height: 3vh;
+  width: 7vw; */
+  flex-grow: 1;
+}
+
+#user-container {
   display: flex;
+  flex-grow: 1;
   justify-content: center;
+}
+
+#user-form-container {
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
-#app {
-  display: flex;
-  flex-flow: column;
-}
-
-#nav-main {
+#nav-main-container {
   height: 85vh;
-  flex-flow: row;
-}
-
-#button-signout {
-  height: 5vh;
-}
-
-#user {
-  margin: auto;
-  height: 60vh;
-  width: 75vh;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-
-#user {
-  margin: auto;
-  height: 100vh;
-  width: 100vh;
-  display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 #next {
@@ -137,20 +112,13 @@ h4 {
 }
 
 #login-form, #signup-form {
-  margin: auto;
-  height: 20vh;
-  width: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-content: center;
   align-items: center;
 }
 
 #all-todos {
-  margin: auto;
-  height: 80vh;
-  width: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -189,6 +157,23 @@ h4 {
   flex-direction: column;
   justify-content: center;
   align-content: center;
+}
+
+#single-todo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+#bucket-form {
+  margin: auto;
+  height: 20vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #bucket-list {
