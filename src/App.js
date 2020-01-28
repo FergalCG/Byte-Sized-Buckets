@@ -43,24 +43,28 @@ class DisconnectedApp extends Component {
   render() {
     return (
       <div id='app'>
-        <div id="header">
+        <div id="header-container">
           <h1>Byte Sized Buckets</h1>
           {
-            this.state.isLoggedIn ? null : <p><strong>Breaking down your growing to-do list into digestable daily buckets!</strong></p>
+            this.state.isLoggedIn ? null : (
+              <p><strong>Breaking down your growing to-do list into digestable daily buckets!</strong></p>
+              
+            )
           }
         </div>
         {
           this.state.isLoggedIn ?
-          <div id='nav-main'>
+          <div id='nav-main-container'>
             <Navbar />
             <Main />
+            <button id='button-signout' onClick={this.handleSignOut}>Sign Out</button>
           </div>
           :
-          <div id='user'>
+          <div id='user-container'>
             <User />
           </div>
         }
-        <button id='button-signout' onClick={this.handleSignOut}>Sign Out</button>
+        
       </div>
     )
   }
