@@ -8,7 +8,7 @@ import * as firebase from "firebase"
 import "../firestore"
 
 export let chooseView = function(bool) {
-    if(this.state.allTodos !== bool) {
+    if(this && this.state.allTodos !== bool) {
         this.setState({allTodos: bool})
     }
 }
@@ -29,10 +29,10 @@ class DisconnectedMain extends Component {
 
     render() {
         return (
-            <div id="next">
+            <div id="main">
                 {
                     this.state.allTodos ?
-                    <div id='all-todos'>
+                    <div id='todos-and-form'>
                         <AllTodos />
                         {
                             this.state.formVisible ?

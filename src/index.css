@@ -6,8 +6,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-image: linear-gradient(rgb(255, 255, 255),rgb(181, 137, 214), rgb(181, 137, 214),rgb(153, 105, 199), rgb(128, 79, 179), rgb(106, 53, 156), rgb(85, 37, 134));
-  overflow: scroll;
+  background-image: linear-gradient(
+    /* rgb(255, 255, 255),
+    rgb(181, 137, 214),  */
+    rgb(181, 137, 214), 
+    rgb(153, 105, 199), 
+    rgb(128, 79, 179), 
+    rgb(106, 53, 156), 
+    /* rgb(85, 37, 134),  */
+    rgb(106, 53, 156),
+    rgb(128, 79, 179), 
+    rgb(153, 105, 199), 
+    rgb(181, 137, 214)
+    /* rgb(181, 137, 214),  */
+    /* rgb(255, 255, 255) */
+  );
 }
 
 html, body, #root, #app {
@@ -28,8 +41,6 @@ h4 {
 }
 
 .bucket-contents {
-  margin: auto;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -37,15 +48,12 @@ h4 {
 }
 
 .make-skinny {
-  width: 25vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .make-skinnier {
-  margin: auto;
-  width: 9vh;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -70,9 +78,6 @@ h4 {
 }
 
 #button-signout {
-  /* margin: 1vh;
-  height: 3vh;
-  width: 7vw; */
   flex-grow: 1;
 }
 
@@ -89,21 +94,27 @@ h4 {
 }
 
 #nav-main-container {
-  height: 85vh;
-  flex-direction: row;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 7;
 }
 
-#next {
+#navbar {
+  display: flex;
+  flex-flow: row wrap;
+  flex-grow: 1;
+  justify-content: space-evenly;
+}
+
+#main {
   display: flex;
   flex-direction: row;
+  flex-grow: 7;
   justify-content: space-around;
   background-color: transparent;
 }
 
 #todos, #bucket {
-  margin: auto;
-  height: 78vh;
-  width: 50vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -116,6 +127,13 @@ h4 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#todos-and-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }
 
 #all-todos {
@@ -137,10 +155,6 @@ h4 {
 }
 
 #preset-todos {
-  margin: auto;
-  height: 13vh;
-  width: 20vh;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -149,10 +163,6 @@ h4 {
 }
 
 #todos-list {
-  margin: auto;
-  height: 90vh;
-  width: 100vh;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -163,13 +173,9 @@ h4 {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-content: center;
 }
 
 #bucket-form {
-  margin: auto;
-  height: 20vh;
-  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -177,10 +183,6 @@ h4 {
 }
 
 #bucket-list {
-  margin: auto;
-  height: 80vh;
-  width: 100vh;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -55,9 +55,8 @@ class DisconnectedApp extends Component {
         {
           this.state.isLoggedIn ?
           <div id='nav-main-container'>
-            <Navbar />
+            <Navbar handleSignOut={this.handleSignOut}/>
             <Main />
-            <button id='button-signout' onClick={this.handleSignOut}>Sign Out</button>
           </div>
           :
           <div id='user-container'>
