@@ -18,7 +18,7 @@ class DisconnectedMain extends Component {
         super()
         this.state = {
             allTodos: true,
-            formVisible: false
+            formVisible: true
         }
         chooseView = chooseView.bind(this)
     }

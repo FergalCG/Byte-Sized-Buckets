@@ -75,27 +75,27 @@ class DisconnectedAllTodos extends Component {
         let count = -1
         return (
             <div id="all-todos">
-                {allTodos.length ? (
-                    <div id="todos-list">
-                        {allTodos.map(todo => {
-                            count++
-                            return (
-                                <div key={count} id="single-todo">
-                                    <Todo todo={todo} key={count} />
-                                    <button
-                                    className="todos-remove-todo"
-                                    type="button"
-                                    value={JSON.stringify(todo)}
-                                    onClick={this.removeTodo}
-                                    key={count-2}>
-                                        <span/>&#10060;
-                                    </button> 
-                                </div>
-                            )
-                        })}
-                    </div>
-                ) :
-                    <div />
+                {
+                    allTodos.length ? (
+                        <div id="todos-list">
+                            {allTodos.map(todo => {
+                                count++
+                                return (
+                                    <div key={count} id="single-todo">
+                                        <Todo todo={todo} key={count} />
+                                        <button
+                                        className="todos-remove-todo"
+                                        type="button"
+                                        value={JSON.stringify(todo)}
+                                        onClick={this.removeTodo}
+                                        key={count-2}>
+                                            <span/>&#10060;
+                                        </button> 
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    ) : <h5>It looks like you have no todos. Add some by pressing the button below!</h5>
                 }
                 <button id="preset-todos" type="button" className="make-skinny" onClick={this.generatePresetTodos}>
                     Generate Preset Todos!

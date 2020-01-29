@@ -131,14 +131,32 @@ h4 {
 
 #todos-and-form {
   display: flex;
-  flex-direction: column;
+  flex-flow: row wrap;
+  flex-grow: 1;
   justify-content: center;
   align-content: center;
+}
+
+#todo-form-container {
+  display: flex;
+  flex-flow: column wrap;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+#todo-form {
+  display: flex;
+  flex-flow: column wrap;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
 }
 
 #all-todos {
   display: flex;
   flex-direction: column;
+  flex-grow: 4;
   justify-content: center;
   align-content: center;
 }
@@ -151,7 +169,7 @@ h4 {
 }
 
 #form-button {
-  position: absolute;
+  
 }
 
 #preset-todos {
