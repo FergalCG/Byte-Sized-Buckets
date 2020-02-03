@@ -21,15 +21,11 @@ body {
     /* rgb(181, 137, 214),  */
     /* rgb(255, 255, 255) */
   );
+  font-size: 175%;
 }
 
 html, body, #root, #app {
   height: 100vh;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }
 
 h1 {

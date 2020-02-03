@@ -88,9 +88,6 @@ class DisconnectedTodoForm extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    user: state.user.user
-})
 
 const mapDispatchToProps = dispatch => ({
     dispatchAddTodo: (email, todo) => {
@@ -98,6 +95,6 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-const TodoForm = connect(mapStateToProps, mapDispatchToProps)(DisconnectedTodoForm)
+const TodoForm = connect(null, mapDispatchToProps)(DisconnectedTodoForm)
 
 export default TodoForm

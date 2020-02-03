@@ -13,18 +13,21 @@ export let chooseView = function(bool) {
     }
 }
 
+export let toggleForm = function() {
+    if(this) {
+        this.setState({formVisible: !this.state.formVisible})
+    }
+}
+
 class DisconnectedMain extends Component {
     constructor() {
         super()
         this.state = {
             allTodos: true,
-            formVisible: true
+            formVisible: false
         }
         chooseView = chooseView.bind(this)
-    }
-
-    componentDidMount() {
-        this.props.getTodos(firebase.auth().currentUser.uid)
+        toggleForm = toggleForm.bind(this)
     }
 
     render() {

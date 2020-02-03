@@ -4,6 +4,7 @@ import {getTodos, dispatchSetTodos, dispatchRemoveTodo} from '../store/todos'
 import { dispatchRemoveBucketTodo } from '../store/bucket'
 import Todo from './Todo'
 import store from '../store'
+import { toggleForm } from './Main'
 import "../firestore"
 import * as firebase from "firebase"
 
@@ -28,9 +29,7 @@ class DisconnectedAllTodos extends Component {
         this.state = {
             todos: []
         }
-        this.generatePresetTodos = this.generatePresetTodos.bind(this)
         allTodosStateChange = allTodosStateChange.bind(this)
-        this.removeTodo = this.removeTodo.bind(this)
     }
 
     componentDidMount() {
@@ -38,7 +37,7 @@ class DisconnectedAllTodos extends Component {
         this.setState(this.props.todos)
     }
 
-    generatePresetTodos(e) {
+    generatePresetTodos = (e) => {
         e.preventDefault()
         this.setState({
             todos: dummyData
@@ -47,7 +46,7 @@ class DisconnectedAllTodos extends Component {
         this.props.dispatchSetTodos(firebase.auth().currentUser.uid, dummyData)
     }
 
-    removeTodo(e) {
+    removeTodo = (e) => {
         e.preventDefault()
         let removedTodo = e.target.value
         let newTodos = this.state.todos.filter( todo => {
@@ -97,6 +96,9 @@ class DisconnectedAllTodos extends Component {
                         </div>
                     ) : <h5>It looks like you have no todos. Add some by pressing the button below!</h5>
                 }
+                <button id="form-button" type="button" className="make-skinny" onClick={() => toggleForm()}>
+                    Add New Todo!
+                </button>
                 <button id="preset-todos" type="button" className="make-skinny" onClick={this.generatePresetTodos}>
                     Generate Preset Todos!
                 </button>
@@ -107,7 +109,6 @@ class DisconnectedAllTodos extends Component {
 
 const mapStateToProps = state => ({
     todos: state.todos.todos,
-    user: state.user.user,
     bucket: state.bucket.bucket
 })
 
