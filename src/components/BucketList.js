@@ -30,9 +30,9 @@ class DisconnectedBucketList extends Component {
         bucketListStateChange = bucketListStateChange.bind(this)
     }
 
-    componentDidMount() {
-        this.setState(store.getState().bucket)
-    }
+    // componentDidMount() {
+    //     this.setState(store.getState().bucket)
+    // }
 
     generateBucket(event, todos = this.props.todos, time = 0) {
         time += Number(this.state.hours*60) + Number(this.state.minutes)
@@ -60,7 +60,7 @@ class DisconnectedBucketList extends Component {
                 list[0] = todos[0]
             }
             console.log(list)
-            this.setState({bucket: list, hours: 0, minutes: 0, date: new Date()})
+            // this.setState({bucket: list, hours: 0, minutes: 0, date: new Date()})
             this.props.setBucket(firebase.auth().currentUser.uid, list)
             return []
         }
@@ -111,7 +111,7 @@ class DisconnectedBucketList extends Component {
 
 
     render() {
-        const bucket = this.state.bucket
+        const bucket = this.props.bucket
         let count = -1
         return (
             <div>
@@ -209,7 +209,6 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
     todos: state.todos.todos,
-    user: state.user,
     bucket: state.bucket.bucket
 })
 
