@@ -17,7 +17,6 @@ class DisconnectedBucketList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            bucket: [],
             hours: 0,
             minutes: 0,
             date: null
@@ -60,7 +59,6 @@ class DisconnectedBucketList extends Component {
                 list[0] = todos[0]
             }
             console.log(list)
-            // this.setState({bucket: list, hours: 0, minutes: 0, date: new Date()})
             this.props.setBucket(firebase.auth().currentUser.uid, list)
             return []
         }
@@ -81,7 +79,7 @@ class DisconnectedBucketList extends Component {
 
             return JSON.stringify(todo) !== removedTodo
         })
-        let newBucket = this.state.bucket.filter( todo => {
+        let newBucket = this.props.bucket.filter( todo => {
 
             return JSON.stringify(todo) !== removedTodo
         })
@@ -97,16 +95,12 @@ class DisconnectedBucketList extends Component {
     removeTodo(e) {
         e.preventDefault()
         let removedTodo = e.target.value
-        let newBucket = this.state.bucket.filter( todo => {
+        let newBucket = this.props.bucket.filter( todo => {
 
             return JSON.stringify(todo) !== removedTodo
         })
         console.log('dispatch next line')
         this.props.dispatchRemoveBucketTodo(firebase.auth().currentUser.uid, newBucket)
-        this.setState({
-            ...this.state,
-            bucket: newBucket
-        })
     }
 
 
