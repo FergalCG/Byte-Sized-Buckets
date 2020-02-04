@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {getTodos, dispatchSetTodos, dispatchRemoveTodo} from '../store/todos'
+import { dispatchSetTodos, dispatchRemoveTodo } from '../store/todos'
 import { dispatchRemoveBucketTodo } from '../store/bucket'
 import Todo from './Todo'
-import store from '../store'
 import { toggleForm } from './Main'
 import "../firestore"
 import * as firebase from "firebase"
@@ -18,55 +17,21 @@ const dummyData = [
     {priority: 1, time: 30, content: 'Get A Haircut'}
 ]
 
-export let allTodosStateChange = function() {
-    this.setState(store.getState().todos)
-}
-
 
 class DisconnectedAllTodos extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            todos: []
-        }
-        allTodosStateChange = allTodosStateChange.bind(this)
-    }
-
-    componentDidMount() {
-        this.props.getTodos(firebase.auth().currentUser.uid)
-        this.setState(this.props.todos)
-    }
 
     generatePresetTodos = (e) => {
         e.preventDefault()
-        this.setState({
-            todos: dummyData
-        })
-        console.log(this.state.todos)
         this.props.dispatchSetTodos(firebase.auth().currentUser.uid, dummyData)
     }
 
     removeTodo = (e) => {
         e.preventDefault()
         let removedTodo = e.target.value
-        let newTodos = this.state.todos.filter( todo => {
-
-            return JSON.stringify(todo) !== removedTodo
-        })
-        let newBucket = this.props.bucket.filter( todo => {
-
-            return JSON.stringify(todo) !== removedTodo
-        })
-        console.log(newTodos)
-        console.log('dispatch next line')
-        this.props.dispatchRemoveTodo(firebase.auth().currentUser.uid, newTodos)
-        if( JSON.stringify(newBucket) !== JSON.stringify(this.state.bucket) ) {
-            this.props.dispatchRemoveBucketTodo(firebase.auth().currentUser.uid, newBucket)
+        this.props.dispatchRemoveTodo(firebase.auth().currentUser.uid, removedTodo)
+        if( this.props.bucket.length > 0 ) {
+            this.props.dispatchRemoveBucketTodo(firebase.auth().currentUser.uid, removedTodo)
         }
-        this.setState({
-            ...this.state,
-            todos: newTodos
-        })
     }
 
     render() {
@@ -113,17 +78,14 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    getTodos: (uid) => {
-        dispatch(getTodos(uid))
-    },
     dispatchSetTodos: (uid, todos) => {
         dispatch(dispatchSetTodos(uid, todos))
     },
-    dispatchRemoveTodo: (uid, newTodos) => {
-        dispatch(dispatchRemoveTodo(uid, newTodos))
+    dispatchRemoveTodo: (uid, todo) => {
+        dispatch(dispatchRemoveTodo(uid, todo))
     },
-    dispatchRemoveBucketTodo: (uid, newBucket) => {
-        dispatch(dispatchRemoveBucketTodo(uid, newBucket))
+    dispatchRemoveBucketTodo: (uid, todo) => {
+        dispatch(dispatchRemoveBucketTodo(uid, todo))
     }
 })
 

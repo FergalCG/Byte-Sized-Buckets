@@ -1,4 +1,4 @@
-import { db } from '../firestore'
+import { db, firebase } from '../firestore'
 
 const REMOVE_BUCKET_TODO = 'REMOVE_BUCKET_TODO'
 const GOT_BUCKET = 'GOT_BUCKET'
@@ -23,18 +23,17 @@ export const getBucket = uid => dispatch => {
     })
 }
 
-export const dispatchRemoveBucketTodo = (uid, newBucket) => dispatch => {
-    console.log('attempting to remove from bucket' + newBucket)
-    db.collection('users').doc(uid).update({
-        bucket: newBucket
-    })
-    .then( () => {
+export const dispatchRemoveBucketTodo = (uid, todo) => async dispatch => {
+    console.log('attempting to remove from bucket' + todo)
+    try {
+        db.collection('users').doc(uid).update({
+            bucket: firebase.firestore.FieldValue.arrayRemove(JSON.parse(todo))
+        })
         console.log('success removing from bucket')
-    })
-    .catch( err => {
+        dispatch(removeBucketTodo(todo))
+    } catch(err) {
         console.log('removing from bucket' + err)
-    })
-    dispatch(removeBucketTodo(newBucket))
+    }
 }
 
 export const setBucket = (uid, bucket) => dispatch => {

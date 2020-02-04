@@ -12,21 +12,19 @@ const initialState = {
 
 export const gotTodos = todos => ({ type: GOT_TODOS, todos})
 export const addTodo = todo => ({ type: ADD_TODO, todo})
-export const removeTodo = newTodos => ({ type: REMOVE_TODO, newTodos})
+export const removeTodo = todo => ({ type: REMOVE_TODO, todo})
 
 
-export const dispatchRemoveTodo = (uid, newTodos) => dispatch => {
-    console.log('attempting to remove' + newTodos)
-    db.collection('users').doc(uid).update({
-        allTodos: newTodos
-    })
-    .then( () => {
+export const dispatchRemoveTodo = (uid, todo) => async dispatch => {
+    try {
+        await db.collection('users').doc(uid).update({
+            allTodos: firebase.firestore.FieldValue.arrayRemove(JSON.parse(todo))
+        })
         console.log('success removing todo')
-    })
-    .catch( err => {
+        dispatch(removeTodo(todo))
+    } catch(err) {
         console.log('Error removing todo' + err)
-    })
-    dispatch(removeTodo(newTodos))
+    }
 }
 
 export const dispatchAddTodo = (uid, todo) => dispatch => {
@@ -79,7 +77,10 @@ const reducer = (state = initialState, action) => {
         case ADD_TODO:
             return {...state, todos: [...state.todos, action.todo]}
         case REMOVE_TODO:
-            return {...state, todos: action.newTodos}
+            let newTodos = state.todos.filter( todo => {
+                return JSON.stringify(todo) !== action.todo
+            })
+            return {...state, todos: newTodos}
         default:
             return state
     }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { dispatchAddTodo } from '../store/todos'
-import { allTodosStateChange } from './AllTodos'
 import "../firestore"
 import * as firebase from "firebase"
 
@@ -39,7 +38,6 @@ class DisconnectedTodoForm extends Component {
             hours: 0,
             minutes: 0
         })
-        allTodosStateChange()
     }
     
 

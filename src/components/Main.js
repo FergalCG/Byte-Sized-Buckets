@@ -30,6 +30,10 @@ class DisconnectedMain extends Component {
         toggleForm = toggleForm.bind(this)
     }
 
+    componentDidMount() {
+        this.props.getTodos(firebase.auth().currentUser.uid)
+    }
+
     render() {
         return (
             <div id="main">
