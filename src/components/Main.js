@@ -10,7 +10,7 @@ import "../firestore"
 
 export let chooseView = function(bool) {
     console.log(this)
-    if(this.isMounted && this.state.allTodos !== bool) {
+    if(this && this.state.allTodos !== bool) {
         this.setState({allTodos: bool})
     }
 }
@@ -33,9 +33,9 @@ class DisconnectedMain extends Component {
         toggleForm = toggleForm.bind(this)
     }
 
-    async componentDidMount() {
-        await this.props.getTodos(firebase.auth().currentUser.uid)
-        await this.props.getBucket(firebase.auth().currentUser.uid)
+    componentDidMount() {
+        this.props.getTodos(firebase.auth().currentUser.uid)
+        this.props.getBucket(firebase.auth().currentUser.uid)
         console.log(this)
     }
 
