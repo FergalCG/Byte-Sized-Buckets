@@ -16,13 +16,14 @@ firebase.initializeApp(firebaseConfig)
 const db = firebase.firestore()
 const provider = new firebase.auth.GoogleAuthProvider();
 
-db.enablePersistence()
-.catch( err => {
+try {
+    db.enablePersistence()
+} catch(err) {
     if (err.code === 'failed-precondition') {
         console.log('ERROR WITH FIRESTORE PERSISTENCE - CODE:01' + err)
     } else if (err.code === 'unimplemented') {
         console.log('ERROR WITH FIRESTORE PERSISTENCE - CODE:02' + err)
     }
-})
+}
 
 export { db, firebase, provider }

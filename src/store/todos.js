@@ -16,6 +16,7 @@ export const removeTodo = todo => ({ type: REMOVE_TODO, todo})
 
 
 export const dispatchRemoveTodo = (uid, todo) => async dispatch => {
+    console.log('attempting to remove todo' + todo)
     try {
         dispatch(removeTodo(todo))
         await db.collection('users').doc(uid).update({
@@ -28,7 +29,7 @@ export const dispatchRemoveTodo = (uid, todo) => async dispatch => {
 }
 
 export const dispatchAddTodo = (uid, todo) => async dispatch => {
-    console.log('attempting to add' + todo)
+    console.log('attempting to add todo' + todo)
     try {
         dispatch(addTodo(todo))
         await db.collection('users').doc(uid).update({
@@ -41,10 +42,10 @@ export const dispatchAddTodo = (uid, todo) => async dispatch => {
 }
 
 export const dispatchSetTodos = (uid, todos) => async dispatch => {
-    console.log('attempting to set')
+    console.log('attempting to set todos')
     try {
         dispatch(gotTodos(todos))
-        await db.collection('users').doc(uid).set({allTodos: todos})
+        await db.collection('users').doc(uid).set({allTodos: todos}, {merge: true})
         console.log('success setting todos')
     } catch(err) {
         console.log('Error setting todos' + err)
@@ -52,11 +53,11 @@ export const dispatchSetTodos = (uid, todos) => async dispatch => {
 }
 
 export const getTodos = uid => async dispatch => {
-    console.log('attempting to get')
+    console.log('attempting to get todos')
     try {
-        const data = await db.collection('users').doc(uid).get().data()
-        if(data.allTodos) {
-            dispatch(gotTodos(data.allTodos))
+        const doc = await db.collection('users').doc(uid).get()
+        if(doc.data().allTodos) {
+            dispatch(gotTodos(doc.data().allTodos))
         }else {
             console.log('No todos to fetch!')
         }

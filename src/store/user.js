@@ -1,19 +1,22 @@
 import {db} from '../firestore'
 
 const GOT_USER = 'GOT_USER'
+const LOGOUT = 'LOGOUT'
 
 const initialState = {
     fullName: '',
-    email: ''
+    email: '',
+    isLoggedIn: false
 }
 
 export const gotUser = user => ({ type: GOT_USER, user})
+export const logout = () => ({ type: LOGOUT })
 
 export const getUser = uid => async dispatch => {
-    console.log('attempting to get')
+    console.log('attempting to get user')
     try {
-        const data = await db.collection('users').doc(uid).get().data()
-        dispatch(gotUser(data))
+        const doc = await db.collection('users').doc(uid).get()
+        dispatch(gotUser(doc.data()))
     } catch (err) {
         console.log('Error fetching user!' + err)
     }
@@ -23,7 +26,9 @@ export const getUser = uid => async dispatch => {
 const reducer = (state = initialState, action) => {
     switch(action.type) {
         case GOT_USER:
-            return {...state, fullName: action.user.fullName, email: action.user.email}
+            return {...state, fullName: action.user.fullName, email: action.user.email, isLoggedIn: true}
+        case LOGOUT:
+            return { ...state, fullName: '', email: '', isLoggedIn: false }
         default:
             return state
     }

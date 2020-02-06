@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import "../firestore"
-import * as firebase from "firebase"
-import { db, provider } from "../firestore"
+import { db, firebase, provider } from "../firestore"
 
 
 class User extends Component {
@@ -22,51 +21,46 @@ class User extends Component {
         })
     }
     
-    handleLogin = (e) => {
-    e.preventDefault()
-    console.log('about to login')
-    firebase
-        .auth()
-        .signInWithEmailAndPassword(this.state.email, this.state.password)
-        .then( result => console.log(result.user))
-        .catch(error => console.log(error))
+    handleLogin = async (e) => {
+        e.preventDefault()
+        console.log('about to login')
+        try {
+            await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+        } catch (err) {
+            console.log('Error with Login ' + err)
+        }
     }
 
-    handleSignUp = (e) => {
+    handleSignUp = async (e) => {
         e.preventDefault()
         console.log('about to create')
-        firebase
-            .auth()
-            .createUserWithEmailAndPassword(this.state.email, this.state.password)
-            .then(result => {
-                let user = result.user
-                db.collection("users").doc(user.uid).set(
-                    {
-                        fullName: this.state.fullName,
-                        email: this.state.email
-                    },
-                    { merge: true }
-                )
-            })
-            .catch(error => console.log(error))
-    }
-
-    handleGoogleAuth = () => {
-        firebase.auth().signInWithPopup(provider)
-        .then( result => {
-            // The signed-in user info.
-            let user = result.user
-            db.collection("users").doc(user.uid).set(
+        try {
+            const { user } = await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+            await db.collection("users").doc(user.uid).set(
                 {
-                    fullName: user.providerData.displayName,
-                    email: user.providerData.email
+                    fullName: this.state.fullName,
+                    email: this.state.email
                 },
                 { merge: true }
             )
-        })
-        .catch( error => {
-            console.log(error)
-        })
+        } catch (err) {
+            console.log('Error with Signup ' + err)
+        }
+    }
+
+    handleGoogleAuth = async () => {
+        try {
+            const { user } = await firebase.auth().signInWithPopup(provider)
+            await db.collection("users").doc(user.uid).set(
+                {
+                    fullName: user.displayName,
+                    email: user.email
+                },
+                { merge: true }
+            )
+        } catch (err) {
+            console.log('Error with Google Auth ' + err)
+        }
     }
 
     toggleSignUp = () => {
