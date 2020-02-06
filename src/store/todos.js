@@ -17,56 +17,52 @@ export const removeTodo = todo => ({ type: REMOVE_TODO, todo})
 
 export const dispatchRemoveTodo = (uid, todo) => async dispatch => {
     try {
+        dispatch(removeTodo(todo))
         await db.collection('users').doc(uid).update({
             allTodos: firebase.firestore.FieldValue.arrayRemove(JSON.parse(todo))
         })
         console.log('success removing todo')
-        dispatch(removeTodo(todo))
     } catch(err) {
         console.log('Error removing todo' + err)
     }
 }
 
-export const dispatchAddTodo = (uid, todo) => dispatch => {
+export const dispatchAddTodo = (uid, todo) => async dispatch => {
     console.log('attempting to add' + todo)
-    db.collection('users').doc(uid).update({
-        allTodos: firebase.firestore.FieldValue.arrayUnion(todo)
-    })
-    .then( () => {
+    try {
+        dispatch(addTodo(todo))
+        await db.collection('users').doc(uid).update({
+            allTodos: firebase.firestore.FieldValue.arrayUnion(todo)
+        })
         console.log('success adding todo')
-    })
-    .catch( err => {
+    } catch(err) {
         console.log('Error adding todo' + err)
-    })
-    dispatch(addTodo(todo))
+    }
 }
 
-export const dispatchSetTodos = (uid, todos) => dispatch => {
+export const dispatchSetTodos = (uid, todos) => async dispatch => {
     console.log('attempting to set')
-    db.collection('users').doc(uid).set({allTodos: todos})
-    .then( () => {
+    try {
+        dispatch(gotTodos(todos))
+        await db.collection('users').doc(uid).set({allTodos: todos})
         console.log('success setting todos')
-    })
-    .catch( err => {
+    } catch(err) {
         console.log('Error setting todos' + err)
-    })
-    dispatch(gotTodos(todos))
+    }
 }
 
-export const getTodos = uid => dispatch => {
+export const getTodos = uid => async dispatch => {
     console.log('attempting to get')
-    db.collection('users').doc(uid).get()
-    .then( doc => {
-        if(doc.data().allTodos) {
-            console.log(doc.data())
-            dispatch(gotTodos(doc.data().allTodos))
+    try {
+        const data = await db.collection('users').doc(uid).get().data()
+        if(data.allTodos) {
+            dispatch(gotTodos(data.allTodos))
         }else {
-            console.log('Couldnt fetch todos!')
+            console.log('No todos to fetch!')
         }
-    })
-    .catch( err => {
+    } catch (err) {
         console.log('Error fetching todos' + err)
-    })
+    }
 }
 
 

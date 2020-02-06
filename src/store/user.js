@@ -9,13 +9,14 @@ const initialState = {
 
 export const gotUser = user => ({ type: GOT_USER, user})
 
-export const getUser = uid => dispatch => {
+export const getUser = uid => async dispatch => {
     console.log('attempting to get')
-    db.collection('users').doc(uid).get()
-    .then( doc => {
-        console.log(doc.data())
-        dispatch(gotUser({...doc.data()}))
-    })
+    try {
+        const data = await db.collection('users').doc(uid).get().data()
+        dispatch(gotUser(data))
+    } catch (err) {
+        console.log('Error fetching user!' + err)
+    }
 }
 
 
