@@ -8,44 +8,45 @@ const initialState = {
 }
 
 export const gotBucket = bucket => ({ type: GOT_BUCKET, bucket})
-export const removeBucketTodo = newBucket => ({ type: REMOVE_BUCKET_TODO, newBucket})
+export const removeBucketTodo = todo => ({ type: REMOVE_BUCKET_TODO, todo})
 
 
-export const getBucket = uid => dispatch => {
+export const getBucket = uid => async dispatch => {
     console.log('attempting to get current bucket...')
-    db.collection('users').doc(uid).get()
-    .then( doc => {
+    try {
+        const doc = await db.collection('users').doc(uid).get()
         if(doc.data().bucket) {
-            dispatch(gotBucket(doc.data()))
+            dispatch(gotBucket(doc.data().bucket))
         }else {
             console.log('Could not find a bucket to fetch!')
         }
-    })
+    } catch (err) {
+        console.log('Error fetching todos' + err)
+    }
 }
 
 export const dispatchRemoveBucketTodo = (uid, todo) => async dispatch => {
     console.log('attempting to remove from bucket' + todo)
     try {
-        db.collection('users').doc(uid).update({
+        dispatch(removeBucketTodo(todo))
+        await db.collection('users').doc(uid).update({
             bucket: firebase.firestore.FieldValue.arrayRemove(JSON.parse(todo))
         })
         console.log('success removing from bucket')
-        dispatch(removeBucketTodo(todo))
     } catch(err) {
         console.log('removing from bucket' + err)
     }
 }
 
-export const setBucket = (uid, bucket) => dispatch => {
-    console.log('attempting to set')
-    db.collection('users').doc(uid).set({bucket: bucket})
-    .then( () => {
-        console.log('success setting todos')
-    })
-    .catch( err => {
+export const setBucket = (uid, bucket) => async dispatch => {
+    console.log('attempting to set bucket')
+    try {
+        dispatch(gotBucket(bucket))
+        await db.collection('users').doc(uid).set({bucket: bucket}, {merge: true})
+        console.log('success setting bucket')
+    } catch (err) {
         console.log('Error setting todos' + err)
-    })
-    dispatch(gotBucket(bucket))
+    }
 }
 
 
@@ -54,7 +55,10 @@ const reducer = (state = initialState, action) => {
         case GOT_BUCKET:
             return {...state, bucket: action.bucket}
         case REMOVE_BUCKET_TODO:
-            return {...state, bucket: action.newBucket}
+            let newBucket = state.bucket.filter( todo => {
+                return JSON.stringify(todo) !== action.todo
+            })
+            return {...state, bucket: newBucket}
         default:
             return state
     }

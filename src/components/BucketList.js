@@ -1,16 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setBucket, dispatchRemoveBucketTodo, getBucket } from '../store/bucket'
+import { setBucket, dispatchRemoveBucketTodo } from '../store/bucket'
 import { dispatchRemoveTodo } from '../store/todos'
 import Todo from './Todo'
-import store from '../store'
 import "../firestore"
 import * as firebase from "firebase"
-
-
-export let bucketListStateChange = function() {
-    this.setState(store.getState().bucket)
-}
 
 
 class DisconnectedBucketList extends Component {
@@ -22,18 +16,9 @@ class DisconnectedBucketList extends Component {
             date: null
         }
         this.time = this.state.hours*60 + this.state.minutes
-        this.generateBucket = this.generateBucket.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.completeTodo = this.completeTodo.bind(this)
-        this.removeTodo = this.removeTodo.bind(this)
-        bucketListStateChange = bucketListStateChange.bind(this)
     }
 
-    // componentDidMount() {
-    //     this.setState(store.getState().bucket)
-    // }
-
-    generateBucket(event, todos = this.props.todos, time = 0) {
+    generateBucket = (event, todos = this.props.todos, time = 0) => {
         time += Number(this.state.hours*60) + Number(this.state.minutes)
         event.preventDefault()
         console.log(time)
@@ -65,42 +50,26 @@ class DisconnectedBucketList extends Component {
         return
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         e.preventDefault()
         this.setState({
             [e.target.name]: e.target.value
         })
     }
 
-    completeTodo(e) {
+    completeTodo = (e) => {
         e.preventDefault()
-        let removedTodo = e.target.value
-        let newTodos = this.props.todos.filter( todo => {
-
-            return JSON.stringify(todo) !== removedTodo
-        })
-        let newBucket = this.props.bucket.filter( todo => {
-
-            return JSON.stringify(todo) !== removedTodo
-        })
+        let completedTodo = e.target.value
         console.log('dispatch next line')
-        this.props.dispatchRemoveBucketTodo(firebase.auth().currentUser.uid, newBucket)
-        this.props.dispatchRemoveTodo(firebase.auth().currentUser.uid, newTodos)
-        this.setState({
-            ...this.state,
-            bucket: newBucket
-        })
+        this.props.dispatchRemoveBucketTodo(firebase.auth().currentUser.uid, completedTodo)
+        this.props.dispatchRemoveTodo(firebase.auth().currentUser.uid, completedTodo)
     }
 
-    removeTodo(e) {
+    removeTodo = (e) => {
         e.preventDefault()
         let removedTodo = e.target.value
-        let newBucket = this.props.bucket.filter( todo => {
-
-            return JSON.stringify(todo) !== removedTodo
-        })
         console.log('dispatch next line')
-        this.props.dispatchRemoveBucketTodo(firebase.auth().currentUser.uid, newBucket)
+        this.props.dispatchRemoveBucketTodo(firebase.auth().currentUser.uid, removedTodo)
     }
 
 
@@ -116,7 +85,7 @@ class DisconnectedBucketList extends Component {
                             return (
                                 <div key={count} className="bucket-contents">
                                     <Todo todo={todo} key={count} />
-                                    {/* <button
+                                    <button
                                     type="button"
                                     className="make-skinnier"
                                     value={JSON.stringify(todo)}
@@ -124,8 +93,8 @@ class DisconnectedBucketList extends Component {
                                     key={count-2}
                                     >
                                         <span/>&#9989;
-                                    </button> */}
-                                    <img 
+                                    </button>
+                                    {/* <img 
                                         src='https://library.kissclipart.com/20180910/wuq/kissclipart-green-check-icon-small-clipart-check-mark-computer-210ea7ac0d00affd.jpg' 
                                         alt='Complete' 
                                         width='21' 
@@ -134,7 +103,7 @@ class DisconnectedBucketList extends Component {
                                         value={JSON.stringify(todo)}
                                         onClick={this.completeTodo}
                                         key={count-2}
-                                    />
+                                    /> */}
                                     <button
                                     className="make-skinnier"
                                     type="button"
@@ -187,17 +156,14 @@ class DisconnectedBucketList extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getBucket: (uid) => {
-        dispatch(getBucket(uid))
-    },
     setBucket: (uid, bucket) => {
         dispatch(setBucket(uid, bucket))
     },
-    dispatchRemoveBucketTodo: (uid, newBucket) => {
-        dispatch(dispatchRemoveBucketTodo(uid, newBucket))
+    dispatchRemoveBucketTodo: (uid, todo) => {
+        dispatch(dispatchRemoveBucketTodo(uid, todo))
     },
-    dispatchRemoveTodo: (uid, newTodos) => {
-        dispatch(dispatchRemoveTodo(uid, newTodos))
+    dispatchRemoveTodo: (uid, todo) => {
+        dispatch(dispatchRemoveTodo(uid, todo))
     }
 })
 

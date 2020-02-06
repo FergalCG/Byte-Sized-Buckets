@@ -4,16 +4,19 @@ import AllTodos from './AllTodos'
 import TodoForm from './TodoForm'
 import BucketList from './BucketList'
 import { getTodos } from '../store/todos'
+import { getBucket } from '../store/bucket'
 import * as firebase from "firebase"
 import "../firestore"
 
 export let chooseView = function(bool) {
-    if(this && this.state.allTodos !== bool) {
+    console.log(this)
+    if(this.isMounted && this.state.allTodos !== bool) {
         this.setState({allTodos: bool})
     }
 }
 
 export let toggleForm = function() {
+    // console.log(this)
     if(this) {
         this.setState({formVisible: !this.state.formVisible})
     }
@@ -30,8 +33,10 @@ class DisconnectedMain extends Component {
         toggleForm = toggleForm.bind(this)
     }
 
-    componentDidMount() {
-        this.props.getTodos(firebase.auth().currentUser.uid)
+    async componentDidMount() {
+        await this.props.getTodos(firebase.auth().currentUser.uid)
+        await this.props.getBucket(firebase.auth().currentUser.uid)
+        console.log(this)
     }
 
     render() {
@@ -61,6 +66,9 @@ class DisconnectedMain extends Component {
 const mapDispatchToProps = dispatch => ({
     getTodos: (uid) => {
         dispatch(getTodos(uid))
+    },
+    getBucket: (uid) => {
+        dispatch(getBucket(uid))
     }
 })
 
