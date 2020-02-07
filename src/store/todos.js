@@ -11,7 +11,7 @@ const initialState = {
 
 
 export const gotTodos = todos => ({ type: GOT_TODOS, todos})
-export const addTodo = todo => ({ type: ADD_TODO, todo})
+export const addTodo = todos => ({ type: ADD_TODO, todos})
 export const removeTodo = todo => ({ type: REMOVE_TODO, todo})
 
 
@@ -35,7 +35,7 @@ export const dispatchAddTodo = (uid, todo, todos) => async dispatch => {
         dispatch(addTodo(newTodos))
         await db.collection('users').doc(uid).set({
             allTodos: newTodos
-        })
+        }, {merge: true})
         console.log('success adding todo')
     } catch(err) {
         console.log('Error adding todo' + err)
@@ -73,16 +73,26 @@ const insertTodo = (todos, todo) => {
     for(let i = 0; i < todos.length; i++) {
         if(todos[i].priority === todo.priority) {
             newTodos.push(todos[i], todo)
+            pushRest(newTodos, todos, ++i)
+            break
         }else if(todos[i].priority < todo.priority) {
             newTodos.push(todo, todos[i])
+            pushRest(newTodos, todos, ++i)
+            break
         }else {
             newTodos.push(todos[i])
         }
     }
-    if(todos.length === startLength) {
+    if(newTodos.length === startLength) {
         newTodos.push(todo)
     }
     return newTodos
+}
+
+const pushRest = (newTodos, todos, i) => {
+    for(i; i < todos.length; i++) {
+        newTodos.push(todos[i])
+    }
 }
 
 

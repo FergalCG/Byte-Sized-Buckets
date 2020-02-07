@@ -8,46 +8,23 @@ import { getBucket } from '../store/bucket'
 import * as firebase from "firebase"
 import "../firestore"
 
-export let chooseView = function(bool) {
-    console.log(this)
-    if(this && this.state.allTodos !== bool) {
-        this.setState({allTodos: bool})
-    }
-}
-
-export let toggleForm = function() {
-    // console.log(this)
-    if(this) {
-        this.setState({formVisible: !this.state.formVisible})
-    }
-}
 
 class DisconnectedMain extends Component {
-    constructor() {
-        super()
-        this.state = {
-            allTodos: true,
-            formVisible: false
-        }
-        chooseView = chooseView.bind(this)
-        toggleForm = toggleForm.bind(this)
-    }
 
     componentDidMount() {
         this.props.getTodos(firebase.auth().currentUser.uid)
         this.props.getBucket(firebase.auth().currentUser.uid)
-        console.log(this)
     }
 
     render() {
         return (
             <div id="main">
                 {
-                    this.state.allTodos ?
+                    this.props.allTodos ?
                     <div id='todos-and-form'>
                         <AllTodos />
                         {
-                            this.state.formVisible ?
+                            this.props.formVisible ?
                             <TodoForm />
                             :
                             null
@@ -63,15 +40,23 @@ class DisconnectedMain extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    allTodos: state.user.allTodos,
+    formVisible: state.user.
+})
+
 const mapDispatchToProps = dispatch => ({
     getTodos: (uid) => {
         dispatch(getTodos(uid))
     },
     getBucket: (uid) => {
         dispatch(getBucket(uid))
+    },
+    toggleForm: bool => {
+        dispatch(toggleForm(bool))
     }
 })
 
-const Main = connect(null, mapDispatchToProps)(DisconnectedMain)
+const Main = connect(mapStateToProps, mapDispatchToProps)(DisconnectedMain)
 
 export default Main
