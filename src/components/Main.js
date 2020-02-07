@@ -51,9 +51,6 @@ const mapDispatchToProps = dispatch => ({
     },
     getBucket: (uid) => {
         dispatch(getBucket(uid))
-    },
-    toggleForm: bool => {
-        dispatch(toggleForm(bool))
     }
 })
 

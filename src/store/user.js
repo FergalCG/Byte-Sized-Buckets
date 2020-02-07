@@ -16,7 +16,7 @@ const initialState = {
 export const gotUser = user => ({ type: GOT_USER, user })
 export const logout = () => ({ type: LOGOUT })
 export const chooseView = bool => ({ type: CHOOSE_VIEW, bool })
-export const toggleForm = bool => ({ type: TOGGLE_FORM, bool })
+export const toggleForm = () => ({ type: TOGGLE_FORM })
 
 export const getUser = uid => async dispatch => {
     console.log('attempting to get user')
@@ -38,7 +38,7 @@ const reducer = (state = initialState, action) => {
         case CHOOSE_VIEW:
             return {...state, allTodos: action.bool}
         case TOGGLE_FORM:
-            return {...state, formVisible: action.bool}
+            return {...state, formVisible: !state.formVisible}
         default:
             return state
     }

@@ -86,7 +86,11 @@ const mapDispatchToProps = dispatch => ({
     },
     dispatchRemoveBucketTodo: (uid, todo) => {
         dispatch(dispatchRemoveBucketTodo(uid, todo))
-    }
+    },
+    toggleForm: bool => {
+        dispatch(toggleForm(bool))
+    } 
+
 })
 
 const AllTodos = connect(mapStateToProps, mapDispatchToProps)(DisconnectedAllTodos)
