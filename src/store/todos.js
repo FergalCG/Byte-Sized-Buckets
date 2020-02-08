@@ -11,7 +11,7 @@ const initialState = {
 
 
 export const gotTodos = todos => ({ type: GOT_TODOS, todos})
-export const addTodo = todo => ({ type: ADD_TODO, todo})
+export const addTodo = todos => ({ type: ADD_TODO, todos})
 export const removeTodo = todo => ({ type: REMOVE_TODO, todo})
 
 
@@ -28,13 +28,14 @@ export const dispatchRemoveTodo = (uid, todo) => async dispatch => {
     }
 }
 
-export const dispatchAddTodo = (uid, todo) => async dispatch => {
+export const dispatchAddTodo = (uid, todo, todos) => async dispatch => {
     console.log('attempting to add todo' + todo)
+    const newTodos = insertTodo(todos, todo)
     try {
-        dispatch(addTodo(todo))
-        await db.collection('users').doc(uid).update({
-            allTodos: firebase.firestore.FieldValue.arrayUnion(todo)
-        })
+        dispatch(addTodo(newTodos))
+        await db.collection('users').doc(uid).set({
+            allTodos: newTodos
+        }, {merge: true})
         console.log('success adding todo')
     } catch(err) {
         console.log('Error adding todo' + err)
@@ -66,15 +67,44 @@ export const getTodos = uid => async dispatch => {
     }
 }
 
+const insertTodo = (todos, todo) => {
+    let newTodos = [],
+        startLength = todos.length
+    for(let i = 0; i < todos.length; i++) {
+        if(todos[i].priority === todo.priority) {
+            newTodos.push(todos[i], todo)
+            pushRest(newTodos, todos, ++i)
+            break
+        }else if(todos[i].priority < todo.priority) {
+            newTodos.push(todo, todos[i])
+            pushRest(newTodos, todos, ++i)
+            break
+        }else {
+            newTodos.push(todos[i])
+        }
+    }
+    if(newTodos.length === startLength) {
+        newTodos.push(todo)
+    }
+    return newTodos
+}
+
+const pushRest = (newTodos, todos, i) => {
+    for(i; i < todos.length; i++) {
+        newTodos.push(todos[i])
+    }
+}
+
 
 const reducer = (state = initialState, action) => {
+    let newTodos
     switch(action.type) {
         case GOT_TODOS:
             return {...state, todos: action.todos}
         case ADD_TODO:
-            return {...state, todos: [...state.todos, action.todo]}
+            return {...state, todos: action.todos}
         case REMOVE_TODO:
-            let newTodos = state.todos.filter( todo => {
+            newTodos = state.todos.filter( todo => {
                 return JSON.stringify(todo) !== action.todo
             })
             return {...state, todos: newTodos}

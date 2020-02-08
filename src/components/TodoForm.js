@@ -29,9 +29,9 @@ class DisconnectedTodoForm extends Component {
         e.preventDefault()
         this.props.dispatchAddTodo(firebase.auth().currentUser.uid, {
             content: this.state.content,
-            priority: this.state.priority,
+            priority: Number(this.state.priority),
             time: this.state.hours*60 + this.state.minutes
-        })
+        }, this.props.todos)
         this.setState({
             content: '',
             priority: 1,
@@ -86,13 +86,16 @@ class DisconnectedTodoForm extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    todos: state.todos.todos
+})
 
 const mapDispatchToProps = dispatch => ({
-    dispatchAddTodo: (email, todo) => {
-        dispatch(dispatchAddTodo(email, todo))
+    dispatchAddTodo: (uid, todo, todos) => {
+        dispatch(dispatchAddTodo(uid, todo, todos))
     }
 })
 
-const TodoForm = connect(null, mapDispatchToProps)(DisconnectedTodoForm)
+const TodoForm = connect(mapStateToProps, mapDispatchToProps)(DisconnectedTodoForm)
 
 export default TodoForm

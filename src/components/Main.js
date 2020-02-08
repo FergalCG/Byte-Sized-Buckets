@@ -8,46 +8,23 @@ import { getBucket } from '../store/bucket'
 import * as firebase from "firebase"
 import "../firestore"
 
-export let chooseView = function(bool) {
-    console.log(this)
-    if(this.isMounted && this.state.allTodos !== bool) {
-        this.setState({allTodos: bool})
-    }
-}
-
-export let toggleForm = function() {
-    // console.log(this)
-    if(this) {
-        this.setState({formVisible: !this.state.formVisible})
-    }
-}
 
 class DisconnectedMain extends Component {
-    constructor() {
-        super()
-        this.state = {
-            allTodos: true,
-            formVisible: false
-        }
-        chooseView = chooseView.bind(this)
-        toggleForm = toggleForm.bind(this)
-    }
 
-    async componentDidMount() {
-        await this.props.getTodos(firebase.auth().currentUser.uid)
-        await this.props.getBucket(firebase.auth().currentUser.uid)
-        console.log(this)
+    componentDidMount() {
+        this.props.dispatchGetTodos(firebase.auth().currentUser.uid)
+        this.props.dispatchGetBucket(firebase.auth().currentUser.uid)
     }
 
     render() {
         return (
             <div id="main">
                 {
-                    this.state.allTodos ?
+                    this.props.allTodos ?
                     <div id='todos-and-form'>
                         <AllTodos />
                         {
-                            this.state.formVisible ?
+                            this.props.formVisible ?
                             <TodoForm />
                             :
                             null
@@ -63,15 +40,20 @@ class DisconnectedMain extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    allTodos: state.user.allTodos,
+    formVisible: state.user.formVisible
+})
+
 const mapDispatchToProps = dispatch => ({
-    getTodos: (uid) => {
+    dispatchGetTodos: (uid) => {
         dispatch(getTodos(uid))
     },
-    getBucket: (uid) => {
+    dispatchGetBucket: (uid) => {
         dispatch(getBucket(uid))
     }
 })
 
-const Main = connect(null, mapDispatchToProps)(DisconnectedMain)
+const Main = connect(mapStateToProps, mapDispatchToProps)(DisconnectedMain)
 
 export default Main
