@@ -6,8 +6,8 @@ class DisconnectedNavbar extends Component {
     render() {
         return (
             <div id='navbar'>
-                <h4 onClick={() => this.props.chooseView(true)}>All Todos</h4>
-                <h4 onClick={() => this.props.chooseView(false)}>Daily Bucket</h4>
+                <h4 onClick={() => this.props.dispatchChooseView(true)}>All Todos</h4>
+                <h4 onClick={() => this.props.dispatchChooseView(false)}>Daily Bucket</h4>
                 <h4 onClick={() => this.props.handleSignOut()}>Sign Out</h4>
             </div>
         )
@@ -15,7 +15,7 @@ class DisconnectedNavbar extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    chooseView: bool => {
+    dispatchChooseView: bool => {
         dispatch(chooseView(bool))
     }
 })

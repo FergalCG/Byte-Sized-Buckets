@@ -12,8 +12,8 @@ import "../firestore"
 class DisconnectedMain extends Component {
 
     componentDidMount() {
-        this.props.getTodos(firebase.auth().currentUser.uid)
-        this.props.getBucket(firebase.auth().currentUser.uid)
+        this.props.dispatchGetTodos(firebase.auth().currentUser.uid)
+        this.props.dispatchGetBucket(firebase.auth().currentUser.uid)
     }
 
     render() {
@@ -42,14 +42,14 @@ class DisconnectedMain extends Component {
 
 const mapStateToProps = state => ({
     allTodos: state.user.allTodos,
-    formVisible: state.user.
+    formVisible: state.user.formVisible
 })
 
 const mapDispatchToProps = dispatch => ({
-    getTodos: (uid) => {
+    dispatchGetTodos: (uid) => {
         dispatch(getTodos(uid))
     },
-    getBucket: (uid) => {
+    dispatchGetBucket: (uid) => {
         dispatch(getBucket(uid))
     }
 })

@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { dispatchSetTodos, dispatchRemoveTodo } from '../store/todos'
 import { dispatchRemoveBucketTodo } from '../store/bucket'
 import Todo from './Todo'
-import { toggleForm } from './Main'
+import { toggleForm } from '../store/user'
 import "../firestore"
 import * as firebase from "firebase"
 
@@ -36,7 +36,7 @@ class DisconnectedAllTodos extends Component {
 
     render() {
         const allTodos = this.props.todos
-        let count = -1
+        let count = 0
         return (
             <div id="all-todos">
                 {
@@ -61,7 +61,7 @@ class DisconnectedAllTodos extends Component {
                         </div>
                     ) : <h5>It looks like you have no todos. Add some by pressing the button below!</h5>
                 }
-                <button id="form-button" type="button" className="make-skinny" onClick={() => toggleForm()}>
+                <button id="form-button" type="button" className="make-skinny" onClick={this.props.dispatchToggleForm}>
                     Add New Todo!
                 </button>
                 <button id="preset-todos" type="button" className="make-skinny" onClick={this.generatePresetTodos}>
@@ -87,10 +87,9 @@ const mapDispatchToProps = dispatch => ({
     dispatchRemoveBucketTodo: (uid, todo) => {
         dispatch(dispatchRemoveBucketTodo(uid, todo))
     },
-    toggleForm: bool => {
-        dispatch(toggleForm(bool))
+    dispatchToggleForm: () => {
+        dispatch(toggleForm())
     } 
-
 })
 
 const AllTodos = connect(mapStateToProps, mapDispatchToProps)(DisconnectedAllTodos)
