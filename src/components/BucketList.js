@@ -19,12 +19,16 @@ class DisconnectedBucketList extends Component {
     }
 
     generateBucket = (event, todos = this.props.todos, time = 0) => {
-        time += Number(this.state.hours*60) + Number(this.state.minutes)
         event.preventDefault()
+        time += Number(this.state.hours*60) + Number(this.state.minutes)
         console.log(time)
-        let list = []
-        let curTime = 0
-        let count = 0
+        let list = [], 
+            curTime = 0, 
+            count = 0
+        // const checkTime = (curTime, time) => {
+        //     if(curTime < time && )
+        // }
+        // while(curTime < time && )
         if(todos.length) {
             while(curTime <= time+15 && count < todos.length && curTime !== time) {
                 const todoCopy = todos[count]
@@ -118,7 +122,7 @@ class DisconnectedBucketList extends Component {
                         })}
                     </div>
                 ) :
-                    <div />
+                    null
                 }
                 <div>
                     <form onSubmit={this.generateBucket} id="bucket-form">
@@ -127,7 +131,7 @@ class DisconnectedBucketList extends Component {
                             type="number"
                             placeholder="0"
                             name="hours"
-                            className="make-skinny"
+                            className="bucket-input"
                             id="hours"
                             onChange={this.handleChange}
                         />
@@ -136,14 +140,14 @@ class DisconnectedBucketList extends Component {
                             type="number"
                             placeholder="0"
                             name="minutes"
-                            className="make-skinny"
+                            className="bucket-input"
                             id="minutes"
                             onChange={this.handleChange}
                         />
                         <br/>
                         <button
-                        className="make-skinny"
                         type="submit"
+                        className="make-skinny"
                         key={count}
                         >
                             <h3>Generate BucketList</h3>
