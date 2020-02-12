@@ -79,7 +79,7 @@ class User extends Component {
                                 type="text"
                                 name="fullName"
                                 placeholder="Full name"
-                                className="make-skinny"
+                                className="user-input"
                                 onChange={this.updateInput}
                                 value={this.state.fullName}
                             />
@@ -87,7 +87,7 @@ class User extends Component {
                                 type="email"
                                 name="email"
                                 placeholder="Email"
-                                className="make-skinny"
+                                className="user-input"
                                 onChange={this.updateInput}
                                 value={this.state.email}
                             />
@@ -95,7 +95,7 @@ class User extends Component {
                                 type="password"
                                 name="password"
                                 placeholder="Password"
-                                className="make-skinny"
+                                className="user-input"
                                 onChange={this.updateInput}
                                 value={this.state.password}
                             />
@@ -110,7 +110,7 @@ class User extends Component {
                             type="email"
                             name="email"
                             placeholder="Email"
-                            className="make-skinny"
+                            className="user-input"
                             onChange={this.updateInput}
                             value={this.state.email}
                         />
@@ -118,7 +118,7 @@ class User extends Component {
                             type="password"
                             name="password"
                             placeholder="Password"
-                            className="make-skinny"
+                            className="user-input"
                             onChange={this.updateInput}
                             value={this.state.password}
                         />
