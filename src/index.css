@@ -40,7 +40,7 @@ h4 {
   display: flex;
   justify-content: space-between;
   align-content: center;
-  witdth: 75%;
+  width: 75%;
 }
 
 .bucket-buttons-container {
@@ -50,15 +50,11 @@ h4 {
 }
 
 .make-skinny {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 33%;
 }
 
 .make-skinnier {
-  display: flex;
-  justify-content: center;
-  align-content: center;
+  width: 33%;
 }
 
 .bucketForm-time {
