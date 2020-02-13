@@ -61,10 +61,10 @@ class DisconnectedAllTodos extends Component {
                         </div>
                     ) : <h5>It looks like you have no todos. Add some by pressing the button below!</h5>
                 }
-                <button id="form-button" type="button" className="make-skinny" onClick={this.props.dispatchToggleForm}>
+                <button id="form-button" type="button" className="all-todos-button" onClick={this.props.dispatchToggleForm}>
                     Add New Todo!
                 </button>
-                <button id="preset-todos" type="button" className="make-skinny" onClick={this.generatePresetTodos}>
+                <button id="preset-todos" type="button" className="all-todos-button" onClick={this.generatePresetTodos}>
                     Generate Preset Todos!
                 </button>
             </div>

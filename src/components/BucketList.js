@@ -25,10 +25,6 @@ class DisconnectedBucketList extends Component {
         let list = [], 
             curTime = 0, 
             count = 0
-        // const checkTime = (curTime, time) => {
-        //     if(curTime < time && )
-        // }
-        // while(curTime < time && )
         if(todos.length) {
             while(curTime <= time+15 && count < todos.length && curTime !== time) {
                 const todoCopy = todos[count]
@@ -81,42 +77,50 @@ class DisconnectedBucketList extends Component {
         const bucket = this.props.bucket
         let count = -1
         return (
-            <div>
+            <div id='bucketList-container'>
                 {bucket.length ? (
                     <div key={count} id="bucket-list">
                         {bucket.map(todo => {
                             count++
                             return (
-                                <div key={count} className="bucket-contents">
+                                <div key={count} className="bucket-single-todo">
                                     <Todo todo={todo} key={count} />
-                                    <button
+                                    {/* <button
                                     type="button"
-                                    className="make-skinnier"
+                                    className="complete-todo-button"
                                     value={JSON.stringify(todo)}
                                     onClick={this.completeTodo}
                                     key={count-2}
                                     >
                                         <span/>&#9989;
-                                    </button>
-                                    {/* <img 
-                                        src='https://library.kissclipart.com/20180910/wuq/kissclipart-green-check-icon-small-clipart-check-mark-computer-210ea7ac0d00affd.jpg' 
-                                        alt='Complete' 
-                                        width='21' 
-                                        height='21'
-                                        className="make-skinnier"
+                                    </button> */}
+                                    <div className='bucket-buttons-container'>
+                                        <i 
+                                            class="fas fa-check-square" value={JSON.stringify(todo)}
+                                            onClick={this.completeTodo}
+                                            className="complete-todo-button"
+                                            key={count-2}
+                                        />
+                                        {/* <img 
+                                            src='https://library.kissclipart.com/20180910/wuq/kissclipart-green-check-icon-small-clipart-check-mark-computer-210ea7ac0d00affd.jpg' 
+                                            alt='Complete' 
+                                            width='21' 
+                                            height='21'
+                                            className="make-skinnier"
+                                            value={JSON.stringify(todo)}
+                                            onClick={this.completeTodo}
+                                            key={count-2}
+                                        /> */}
+                                        <button
+                                        className="remove-todo-button"
+                                        type="button"
                                         value={JSON.stringify(todo)}
-                                        onClick={this.completeTodo}
-                                        key={count-2}
-                                    /> */}
-                                    <button
-                                    className="make-skinnier"
-                                    type="button"
-                                    value={JSON.stringify(todo)}
-                                    onClick={this.removeTodo}
-                                    key={count+50}
-                                    >
-                                        <span/>&#10060;
-                                    </button> 
+                                        onClick={this.removeTodo}
+                                        key={count+50}
+                                        >
+                                            <span/>&#10060;
+                                        </button>
+                                    </div>
                                 </div>
                             )
                         })}
@@ -147,7 +151,7 @@ class DisconnectedBucketList extends Component {
                         <br/>
                         <button
                         type="submit"
-                        className="make-skinny"
+                        className="generate-bucket-button"
                         key={count}
                         >
                             <h3>Generate BucketList</h3>

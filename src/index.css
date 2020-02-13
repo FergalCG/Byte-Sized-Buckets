@@ -36,11 +36,17 @@ h4 {
   text-align: center;
 }
 
-.bucket-contents {
+.bucket-single-todo {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-content: center;
+  witdth: 75%;
+}
+
+.bucket-buttons-container {
+  display: flex;
+  justify-content: space-between;
+  width: 25%;
 }
 
 .make-skinny {
@@ -164,10 +170,6 @@ h4 {
   align-content: center;
 }
 
-#form-button {
-  
-}
-
 #preset-todos {
   display: flex;
   flex-direction: column;
@@ -180,13 +182,17 @@ h4 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-content: center;
+  align-items: center;
 }
 
 #single-todo {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  width: 33%;
+  /* border-radius: 10%; */
+  background: rgba(5, 5, 5, 0.178);
 }
 
 #bucket-form {
