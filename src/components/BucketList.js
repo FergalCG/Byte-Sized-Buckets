@@ -96,9 +96,10 @@ class DisconnectedBucketList extends Component {
                                     </button> */}
                                     <div className='bucket-buttons-container'>
                                         <i 
-                                            class="fas fa-check-square" value={JSON.stringify(todo)}
+                                            className="fas fa-check-square" 
+                                            value={JSON.stringify(todo)}
                                             onClick={this.completeTodo}
-                                            className="complete-todo-button"
+                                            // className="complete-todo-button"
                                             key={count-2}
                                         />
                                         {/* <img 
@@ -128,36 +129,40 @@ class DisconnectedBucketList extends Component {
                 ) :
                     null
                 }
-                <div>
-                    <form onSubmit={this.generateBucket} id="bucket-form">
-                        <p className="bucketForm-time">Hours</p>
-                        <input
-                            type="number"
-                            placeholder="0"
-                            name="hours"
-                            className="bucket-input"
-                            id="hours"
-                            onChange={this.handleChange}
-                        />
-                        <p className="bucketForm-time">Minutes</p>
-                        <input
-                            type="number"
-                            placeholder="0"
-                            name="minutes"
-                            className="bucket-input"
-                            id="minutes"
-                            onChange={this.handleChange}
-                        />
-                        <br/>
-                        <button
-                        type="submit"
-                        className="generate-bucket-button"
-                        key={count}
-                        >
-                            <h3>Generate BucketList</h3>
-                        </button>
-                    </form>
-                </div>
+                <form onSubmit={this.generateBucket} id="bucket-form-and-button">
+                    <div id='bucket-time-inputs'>
+                        <div className='bucket-time-input'>
+                            <p className="bucketForm-time">Hours</p>
+                            <input
+                                type="number"
+                                placeholder="0"
+                                name="hours"
+                                className="bucket-input"
+                                id="hours"
+                                onChange={this.handleChange}
+                            />
+                        </div>
+                        <div className='bucket-time-input'>
+                            <p className="bucketForm-time">Minutes</p>
+                            <input
+                                type="number"
+                                placeholder="0"
+                                name="minutes"
+                                className="bucket-input"
+                                id="minutes"
+                                onChange={this.handleChange}
+                            />
+                        </div>
+                    </div>
+                    <br/>
+                    <button
+                    type="submit"
+                    id="generate-bucket-button"
+                    key={count}
+                    >
+                        <h3>Generate BucketList</h3>
+                    </button>
+                </form>
             </div>
         )
     }

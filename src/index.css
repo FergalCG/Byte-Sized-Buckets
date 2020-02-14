@@ -32,21 +32,40 @@ h1 {
   text-decoration: underline;
 }
 
-h4 {
+h4, h5 {
   text-align: center;
 }
 
-.bucket-single-todo {
+.all-todos-button {
+  margin-top: 1%;
+  width: 25%;
+}
+
+.single-todo, .bucket-single-todo {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-content: center;
-  width: 75%;
+  align-items: center;
+  width: 33%;
+  margin-top: 1px;
+  border: 1px solid black;
+  background: rgba(5, 5, 5, 0.178);
 }
 
 .bucket-buttons-container {
   display: flex;
   justify-content: space-between;
   width: 25%;
+}
+
+.bucket-time-input {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+}
+
+.bucketForm-time {
+  margin-bottom: 0%;
 }
 
 .make-skinny {
@@ -112,7 +131,7 @@ h4 {
   background-color: transparent;
 }
 
-#todos, #bucket {
+#todos {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -159,19 +178,46 @@ h4 {
   align-content: center;
 }
 
+#bucketList-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 4;
+  justify-content: center;
+  align-content: center;
+}
+
+#bucketList-and-form {
+  display: flex;
+  flex-flow: row wrap;
+  flex-grow: 1;
+  justify-content: center;
+  align-content: center;
+}
+
+#bucket-form-and-button {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#bucket-time-inputs {
+  display: flex;
+  flex-direction: row;
+}
+
+#all-todos-buttons-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #form-input1, #form-input2 {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-content: center;
-}
-
-#preset-todos {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-  border-radius: 10%;
 }
 
 #todos-list {
@@ -181,15 +227,7 @@ h4 {
   align-items: center;
 }
 
-#single-todo {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 33%;
-  /* border-radius: 10%; */
-  background: rgba(5, 5, 5, 0.178);
-}
+
 
 #bucket-form {
   display: flex;
@@ -202,5 +240,16 @@ h4 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-content: center;
+  align-items: center;
+}
+
+#bucket-single-todo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 33%;
+  margin-top: 1px;
+  border: 1px solid black;
+  background: rgba(5, 5, 5, 0.178);
 }
