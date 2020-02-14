@@ -47,15 +47,15 @@ h4, h5 {
   justify-content: space-between;
   align-items: center;
   width: 33%;
-  margin-top: 1px;
-  border: 1px solid black;
+  margin-top: 3px;
+  border: 2px solid black;
   background: rgba(5, 5, 5, 0.178);
 }
 
 .bucket-buttons-container {
   display: flex;
-  justify-content: space-between;
-  width: 25%;
+  justify-content: space-evenly;
+  width: 15%;
 }
 
 .bucket-time-input {
