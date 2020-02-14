@@ -45,7 +45,7 @@ class DisconnectedAllTodos extends Component {
                             {allTodos.map(todo => {
                                 count++
                                 return (
-                                    <div key={count} id="single-todo">
+                                    <div key={count} className="single-todo">
                                         <Todo todo={todo} key={count} />
                                         <button
                                         className="todos-remove-todo"
@@ -59,14 +59,18 @@ class DisconnectedAllTodos extends Component {
                                 )
                             })}
                         </div>
-                    ) : <h5>It looks like you have no todos. Add some by pressing the button below!</h5>
+                    ) : <h5>It looks like you have no todos. Add some with the buttons below!</h5>
                 }
-                <button id="form-button" type="button" className="make-skinny" onClick={this.props.dispatchToggleForm}>
-                    Add New Todo!
-                </button>
-                <button id="preset-todos" type="button" className="make-skinny" onClick={this.generatePresetTodos}>
-                    Generate Preset Todos!
-                </button>
+                <div id='all-todos-buttons-container'>
+                    <button type="button" className="all-todos-button" onClick={this.props.dispatchToggleForm}>
+                        {
+                            !this.props.formVisible ?  'Add New Todo' : 'Hide Todo Form'
+                        }
+                    </button>
+                    <button type="button" className="all-todos-button" onClick={this.generatePresetTodos}>
+                        Generate Preset Todos!
+                    </button>
+                </div>
             </div>
         )
     }
@@ -74,7 +78,8 @@ class DisconnectedAllTodos extends Component {
 
 const mapStateToProps = state => ({
     todos: state.todos.todos,
-    bucket: state.bucket.bucket
+    bucket: state.bucket.bucket,
+    formVisible: state.user.formVisible
 })
 
 const mapDispatchToProps = dispatch => ({

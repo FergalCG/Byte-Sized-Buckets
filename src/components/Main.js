@@ -31,7 +31,7 @@ class DisconnectedMain extends Component {
                         }
                     </div>
                     :
-                    <div id='bucket'>
+                    <div id='bucketList-and-form'>
                         <BucketList />
                     </div>
                 }
