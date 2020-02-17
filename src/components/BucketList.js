@@ -85,23 +85,24 @@ class DisconnectedBucketList extends Component {
                             return (
                                 <div key={count} className="bucket-single-todo">
                                     <Todo todo={todo} key={count} />
-                                    {/* <button
-                                    type="button"
-                                    className="complete-todo-button"
-                                    value={JSON.stringify(todo)}
-                                    onClick={this.completeTodo}
-                                    key={count-2}
+                                    <button
+                                        type="button"
+                                        className="complete-todo-button"
+                                        value={JSON.stringify(todo)}
+                                        onClick={this.completeTodo}
+                                        key={count-2}
                                     >
-                                        <span/>&#9989;
-                                    </button> */}
+                                        <i className="fas-fa-2x-check" />
+                                    </button>
                                     <div className='bucket-buttons-container'>
-                                        <i 
-                                            className="fas fa-check-square" 
+                                        {/* <i 
+                                            className="fas fa-check" 
                                             value={JSON.stringify(todo)}
                                             onClick={this.completeTodo}
                                             // className="complete-todo-button"
                                             key={count-2}
-                                        />
+                                            style={{width: '30px'}}
+                                        /> */}
                                         {/* <img 
                                             src='https://library.kissclipart.com/20180910/wuq/kissclipart-green-check-icon-small-clipart-check-mark-computer-210ea7ac0d00affd.jpg' 
                                             alt='Complete' 
@@ -113,11 +114,11 @@ class DisconnectedBucketList extends Component {
                                             key={count-2}
                                         /> */}
                                         <button
-                                        className="remove-todo-button"
-                                        type="button"
-                                        value={JSON.stringify(todo)}
-                                        onClick={this.removeTodo}
-                                        key={count+50}
+                                            className="remove-todo-button"
+                                            type="button"
+                                            value={JSON.stringify(todo)}
+                                            onClick={this.removeTodo}
+                                            key={count+50}
                                         >
                                             <span/>&#10060;
                                         </button>
